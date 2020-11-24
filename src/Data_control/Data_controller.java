@@ -1,4 +1,4 @@
-package data_control;
+package Data_control;
 
 public class Data_controller{
 
