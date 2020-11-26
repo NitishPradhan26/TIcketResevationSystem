@@ -1,6 +1,7 @@
 package User_interface;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
@@ -8,9 +9,13 @@ import javax.swing.*;
 
 public class Homepage extends JFrame {
 	private JLabel title = new JLabel("Ticket Reservation System");
+	private JLabel subtitle;
+	private String userName;
+	private boolean registeredUser = false;
 	private JButton cancelTicketButton= new JButton("Cancel Tickets");
 	private JButton purchaseTicketButton= new JButton("Purchase Tickets");
 	private JButton loginButton = new JButton("Login");
+	private JButton registerButton = new JButton("Register");
 	private JPanel north = new JPanel();
 	private JPanel center = new JPanel();
 	private Font buttonFont = new Font("Verdana", Font.BOLD, 18);
@@ -23,39 +28,53 @@ public class Homepage extends JFrame {
 		setSize(new Dimension(400,600));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		setVisible(true);
 		setLayout(new BorderLayout());
 		
+		
 		//sets background, font and font colour of title
+		north.setLayout(new BoxLayout(north, BoxLayout.Y_AXIS));
 		north.setBackground(new Color(0,109,119));
 		north.setForeground(Color.white);
 		Font titleFont= new Font("Verdana", Font.BOLD, 24);
 		title.setFont(titleFont);
 		title.setForeground(Color.white);
 		north.add(title);
+		setRegisteredUserName();
 		add("North",north);
 
 		
 		//button related operations
 		center.setLayout(new BorderLayout());
 		center.setBackground(new Color(131,197,190));
-		JPanel ticketLayout = new JPanel (new GridLayout());
+		JPanel buttonLayout = new JPanel (new GridLayout(0,1));
 		cancelTicketButton.setFont(buttonFont);
 		cancelTicketButton.setBackground(buttonColor);
-		ticketLayout.add(cancelTicketButton);
+		buttonLayout.add(cancelTicketButton);
 		purchaseTicketButton.setFont(buttonFont);
 		purchaseTicketButton.setBackground(buttonColor);
-		ticketLayout.add(purchaseTicketButton);
-		center.add("Center", ticketLayout);
-		JPanel loginB = new JPanel (new GridLayout());
+		buttonLayout.add(purchaseTicketButton);
 		loginButton.setFont(buttonFont);
 		loginButton.setBackground(buttonColor);
-		loginB.add(loginButton);
-		center.add("South", loginB);
-		add("Center", center);
+		buttonLayout.add(loginButton);
+		registerButton.setFont(buttonFont);
+		registerButton.setBackground(buttonColor);
+		buttonLayout.add(registerButton);
+		add("Center", buttonLayout);
 		
 	}
 	
+	private void setRegisteredUserName() {
+		if (!registeredUser) {
+			subtitle = new JLabel("WELCOME UNREGISTERED USER");
+		}
+		else {
+			subtitle = new JLabel("WELCOME "+userName.toUpperCase());
+		}
+		subtitle.setFont(new Font("Verdana", Font.PLAIN, 18));
+		subtitle.setForeground(Color.white);
+		north.add(subtitle);
+	}
+
 	public void addPurchaseTicketListener(ActionListener listener) {
 		purchaseTicketButton.addActionListener(listener);
 	}
@@ -68,10 +87,16 @@ public class Homepage extends JFrame {
 		loginButton.addActionListener(listener);
 	}
 	
-	
-	
-	public static void main(String[] args) {
-		Homepage h = new Homepage();
+	public void addRegisterListener(ActionListener listener) {
+		registerButton.addActionListener(listener);
 	}
+	
+	
+	public void closeHomepage() {
+		setVisible(false);
+		dispose();
+	}
+	
+	
 }
 

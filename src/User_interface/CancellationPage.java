@@ -13,7 +13,6 @@ public class CancellationPage extends JFrame{
 		setSize(new Dimension(400,600));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		setVisible(true);
 		setLayout(new BorderLayout());
 		
 		//sets title
