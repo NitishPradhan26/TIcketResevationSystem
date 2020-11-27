@@ -4,17 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class CancellationPage extends JFrame{
+public class MoviePage extends JFrame{
 	private JLabel title = new JLabel("Ticket Reservation System");
 	private JPanel north = new JPanel();
+	private JPanel center = new JPanel();
 	private JPanel south = new JPanel();
 	private JButton backButton = new JButton("Back to Homepage");
 	private Font labelFont = new Font("Verdana", Font.BOLD, 18);
 	private Font fieldFont = new Font("Verdana", Font.PLAIN, 16);
 	private Color buttonColor = new Color(237,246,249);
 	
-	
-	public CancellationPage() {
+	public MoviePage() {
 		super("Cancellation Page");
 		setTitle("Cancel Tickets");
 		setSize(new Dimension(400,600));
@@ -31,18 +31,23 @@ public class CancellationPage extends JFrame{
 		north.add(title);
 		add("North",north);
 		
+		//content
+		center.setLayout(new BorderLayout());
+		center.setBackground(new Color(131,197,190));
+		JLabel selectMovie = new JLabel("Please select a movie:");
+		selectMovie.setFont(new Font("Verdana", Font.BOLD, 22));
+		center.add("North",selectMovie);
+		add("Center", center);
+		
+		
 		backButton.setFont(labelFont);
 		backButton.setBackground(buttonColor);
 		south.setBackground(new Color(0,109,119));
 		south.add(backButton);
 		add("South", south);
-		
-		
-		
 	}
 	
 	public void addBackListener(ActionListener listener) {
 		backButton.addActionListener(listener);
 	}
-
 }
