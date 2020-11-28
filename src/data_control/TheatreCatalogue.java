@@ -3,13 +3,12 @@ package data_control;
 import theatre_elements.Theatre;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TheatreCatalogue {
-    private List<Theatre> theatres;
+    private ArrayList<Theatre> theatres;
 
-    public TheatreCatalogue(){
-        theatres = new ArrayList<>();
+    public TheatreCatalogue(ArrayList<Theatre> theatres){
+        this.theatres = theatres;
     }
 
     public Theatre searchTheatre(String search){
