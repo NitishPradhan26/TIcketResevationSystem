@@ -290,7 +290,7 @@ public class RegisterForm extends JFrame{
 		public void actionPerformed(ActionEvent e){
 			int response = JOptionPane.showConfirmDialog(getParent(), "You will be charged $20 for the account fee. Do you accept?");
 			if (response==JOptionPane.YES_OPTION) {
-				dataControl.registerUser(getName(), getUsername(), getPassword(), getEmail());
+				dataControl.registerUser(getName(), getUsername(), getPassword(), getEmail(), getStringFromTextBox(creditCardInput), getStringFromTextBox(expiryDateInput), Integer.parseInt(getStringFromTextBox(cvvInput)), getStringFromTextBox(addressInput));
 				JOptionPane.showMessageDialog(getParent(), "Registration successful!");
 				UIManager instance = UIManager.getUIManager();
 				instance.closeRegisterForm();

@@ -1,6 +1,7 @@
 package Data_control;
 
 import Theatre_elements.*;
+import Transaction_elements.Payment;
 import Transaction_elements.Ticket;
 import User.Administrator;
 import User.Registered_user;
@@ -59,7 +60,7 @@ public class DatabaseManager {
                 if(userSet.getInt(9) == 1){
                     users.add(new Registered_user(userSet.getString(1), userSet.getString(2),
                             userSet.getString(3), userSet.getString(4), userSet.getInt(5),
-                            userSet.getFloat(6), userSet.getString(7), userSet.getString(8)));
+                            userSet.getFloat(6), userSet.getString(7), "", 0, userSet.getString(8)));
                 }
                 else if (userSet.getInt(10) == 1){
                     users.add(new Administrator(userSet.getString(1), userSet.getString(2),
@@ -146,7 +147,7 @@ public class DatabaseManager {
         ResultSet set = queryDB("SELECT UserAccnt, Price, Cancelled FROM ticket WHERE TicketNo='" + ticketNo + "'");
         try{
             set.next();
-            Ticket ticket = new Ticket(ticketNo, seat, findUser(set.getInt(1)), showing, set.getFloat(2), set.getBoolean(3), null);
+            Ticket ticket = new Ticket(ticketNo, seat, findUser(set.getInt(1)), showing, set.getFloat(2), set.getBoolean(3), new Payment());
             tickets.add(ticket);
             return ticket;
         } catch (SQLException e){

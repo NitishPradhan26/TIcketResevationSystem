@@ -81,11 +81,15 @@ public class CancellationPage extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			ticketManager.cancelTicket(getTicketID());
-			JOptionPane.showMessageDialog(getParent(), "Refund successful. A credit has been added to your account.");
-			UIManager instance = UIManager.getUIManager();
-			instance.closeCancelPage();
-			instance.openHomepage();
+			if(ticketManager.cancelTicket(getTicketID())){
+				JOptionPane.showMessageDialog(getParent(), "Refund successful. A credit has been added to your account.");
+				UIManager instance = UIManager.getUIManager();
+				instance.closeCancelPage();
+				instance.openHomepage();
+			}
+			else {
+				JOptionPane.showMessageDialog(getParent(), "Refund unsuccessful. Please enter a valid ticket ID.");
+			}
 		}
 	}
 

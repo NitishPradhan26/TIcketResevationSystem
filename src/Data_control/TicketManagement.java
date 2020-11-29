@@ -41,20 +41,14 @@ public class TicketManagement {
         return null;
     }
 
-    public void cancelTicket(int ticketId){
+    public boolean cancelTicket(int ticketId){
         Ticket ticket = dc.ticketList.getTicket(ticketId);
-
-        if( ticket == null){
-
-            System.out.println(" Ticket not found in. Please enter a valid number..");
+        if(ticket == null){
+            return false;
         }
-
         else {
-
-            System.out.println(" Ticket found. Processing");
             ticket.refundTicket();
-
+            return true;
         }
-
     }
 }

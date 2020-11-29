@@ -16,7 +16,7 @@ public class Payment {
     public  Payment(){
         this.creditCard = null;
         this.bank = null;
-        this.timeStamp = null;
+        this.timeStamp = new Timestamp(System.currentTimeMillis());
         this.ammount = 0;
 
     }
