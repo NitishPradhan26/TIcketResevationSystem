@@ -1,10 +1,10 @@
-package data_control;
+package Data_control;
 
-import theatre_elements.*;
-import transaction_elements.Ticket;
-import users.Administrator;
-import users.RegisteredUser;
-import users.User;
+import Theatre_elements.*;
+import Transaction_elements.Ticket;
+import User.Administrator;
+import User.Registered_user;
+import User.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class DatabaseManager {
         try {
             while (userSet.next()) {
                 if(userSet.getInt(9) == 1){
-                    users.add(new RegisteredUser(userSet.getString(1), userSet.getString(2),
+                    users.add(new Registered_user(userSet.getString(1), userSet.getString(2),
                             userSet.getString(3), userSet.getString(4), userSet.getInt(5),
                             userSet.getFloat(6), userSet.getString(7), userSet.getString(8)));
                 }

@@ -1,6 +1,6 @@
-package theatre_elements;
+package Theatre_elements;
 
-import transaction_elements.Ticket;
+import Transaction_elements.Ticket;
 
 public class Seat {
     private char row;

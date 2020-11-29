@@ -9,18 +9,17 @@ public class User {
     private float credit;
     private int accountNum;
 
+    public User (String name, String username, String password, String email,  int accountNum, float credit){
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.accountNum = accountNum;
+        this.credit = credit;
+    }
 
-
-    public User(String Name, String Username, String Password, String Email, int Accountnum){
-
-        this.name = Name;
-        this.username = Username;
-        this.password = Password;
-        this.email = Email;
-        this.accountNum = Accountnum;
-        this.credit =0;
-
-
+    public int getAccountNum(){
+        return accountNum;
     }
 
     public float getCredit() {

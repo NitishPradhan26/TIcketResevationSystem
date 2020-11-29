@@ -1,6 +1,6 @@
-package data_control;
+package Data_control;
 
-import transaction_elements.Ticket;
+import Transaction_elements.Ticket;
 
 import java.util.ArrayList;
 import java.util.List;

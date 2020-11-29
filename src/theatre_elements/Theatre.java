@@ -1,4 +1,4 @@
-package theatre_elements;
+package Theatre_elements;
 
 public class Theatre {
     private String name;

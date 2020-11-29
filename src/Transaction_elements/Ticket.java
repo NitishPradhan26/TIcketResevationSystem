@@ -1,53 +1,35 @@
 package Transaction_elements;
 
-import User.*;
+import Theatre_elements.Seat;
+import Theatre_elements.Showing;
+import User.User;
+
 public class Ticket {
-
-
+    private int ticketNo;
     private Seat seat;
-
-
     private User user;
     private Showing showing;
-
-
     private float price;
     private boolean cancelled;
 
-
-    public Ticket( Seat Seat,User userA, Showing showingA, float Price, boolean Cancelled)
-
-    {
-
-        this.seat = Seat;
-        this.user = userA;
-        this.showing = showingA;
-        this.price = Price;
-        this.cancelled = false;
-
-
+    public Ticket(int ticketNo, Seat seat, User user, Showing showing, float price, boolean cancelled){
+        this.ticketNo = ticketNo;
+        this.seat = seat;
+        this.user = user;
+        this.showing = showing;
+        this.price = price;
+        this.cancelled = cancelled;
     }
 
-    public void refundTransfer(){
-
-
-        float refund= (float) (this.user.getCredit() + (price - (0.15*price)));
-        this.user.setCredit(refund);
-
-        System.out.println(" refund credit succesfully added to the client account ");
-
-        this.cancelled = true;
-    }
-
-    public User getUser() {
+    public User getUser(){
         return user;
     }
 
-    public float getPrice() {
+    public float getPrice(){
         return price;
     }
 
-
-
-
+    public int getTicketNo() {
+        return ticketNo;
+    }
 }

@@ -1,6 +1,4 @@
-package theatre_elements;
-
-import java.sql.Timestamp;
+package Theatre_elements;
 
 public class Showing {
     private Movie movie;

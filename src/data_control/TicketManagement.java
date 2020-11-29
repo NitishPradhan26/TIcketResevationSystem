@@ -1,9 +1,9 @@
-package data_control;
+package Data_control;
 
-import theatre_elements.Seat;
-import theatre_elements.Showing;
-import transaction_elements.Ticket;
-import users.User;
+import Theatre_elements.Seat;
+import Theatre_elements.Showing;
+import Transaction_elements.Ticket;
+import User.User;
 
 public class TicketManagement {
 

@@ -1,9 +1,9 @@
-package data_control;
+package Data_control;
 
-import theatre_elements.Movie;
-import theatre_elements.Showing;
-import theatre_elements.Theatre;
-import users.User;
+import Theatre_elements.Movie;
+import Theatre_elements.Showing;
+import Theatre_elements.Theatre;
+import User.User;
 
 import java.util.ArrayList;
 

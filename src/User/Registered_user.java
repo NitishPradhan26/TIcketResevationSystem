@@ -4,15 +4,9 @@ public class Registered_user extends User {
     private String creditCardNumber;
     private String address;
 
-
-
-    public Registered_user(String Name, String Username, String Password, String Email, int Accountnum,String CreditCardNumber,String Address) {
-        super(Name, Username, Password, Email, Accountnum);
-
-        this.creditCardNumber = CreditCardNumber;
-        this.address = Address;
+    public Registered_user(String name, String username, String password, String email, int accountNum, float credit, String creditCardNo, String address) {
+        super(name, username, password, email, accountNum, credit);
+        this.creditCardNumber = creditCardNo;
+        this.address = address;
     }
-
-
-
 }

@@ -1,6 +1,6 @@
-package data_control;
+package Data_control;
 
-import theatre_elements.Movie;
+import Theatre_elements.Movie;
 
 import java.util.ArrayList;
 

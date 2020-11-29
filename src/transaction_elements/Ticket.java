@@ -1,8 +1,8 @@
-package transaction_elements;
+package Transaction_elements;
 
-import theatre_elements.Seat;
-import theatre_elements.Showing;
-import users.User;
+import Theatre_elements.Seat;
+import Theatre_elements.Showing;
+import User.User;
 
 public class Ticket {
     private int ticketNo;
@@ -19,6 +19,14 @@ public class Ticket {
         this.showing = showing;
         this.price = price;
         this.cancelled = cancelled;
+    }
+
+    public User getUser(){
+        return user;
+    }
+
+    public float getPrice(){
+        return price;
     }
 
     public int getTicketNo() {
