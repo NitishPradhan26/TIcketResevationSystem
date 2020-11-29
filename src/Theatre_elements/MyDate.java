@@ -33,6 +33,20 @@ public class MyDate {
             return false;
         }
     }
+    
+    public String getDateString() {
+    	String date = Integer.toString(month)+"/"+Integer.toString(day)+"/"+Integer.toString(year);
+    	return date;
+    }
+    
+    public String getTimeString() {
+    	String time = Integer.toString(hour)+":"+Integer.toString(minute);
+    	return time;
+    }
+    
+    public String toString() {
+    	return getDateString()+" "+getTimeString();
+    }
 
     public int getYear() {
         return year;

@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import Data_control.DataController;
+import Theatre_elements.MyDate;
 import Theatre_elements.Showing;
 
 import java.awt.*;
@@ -144,27 +145,24 @@ public class MoviePage extends JFrame{
         contentPane.add("Center", scrollPane);
         selectShowingListener SListener = new selectShowingListener();
         ArrayList<Showing> showings = getShowings((String)movieSelection.getSelectedItem(), (String)theatreSelection.getSelectedItem());
-        Iterator iterator = showings.iterator();
+        ArrayList<ArrayList<Showing>> sortedShowings = getShowingsPerDate(showings);
+        Iterator iterator = sortedShowings.iterator();
         while (iterator.hasNext()) {
         	JPanel oneShowing = new JPanel();
         	oneShowing.setLayout(new BorderLayout());
     		oneShowing.setBackground(centerBackgroundColor);
     		oneShowing.setBorder(new EmptyBorder(10,10, 10,10 ));
-    		Showing show = (Showing) iterator.next();
-    		Date showDate = show.getTime();
-    		JLabel date = new JLabel(showDate.getMonth()+"/"+showDate.getDate()+"/"+showDate.getYear());
+    		ArrayList<Showing> showingOnDate = (ArrayList<Showing>) iterator.next();
+    		Iterator showingIterator = showingOnDate.iterator();
+    		JLabel date = new JLabel(showingOnDate.get(0).getTime().getDateString());
     		date.setFont(labelFont);
     		oneShowing.add("North", date);
     		JPanel showingsForOneDate = new JPanel(new GridLayout(-1,2));
     		showingsForOneDate.setBackground(buttonColor);
-    		Date toCompare = showDate;
-    		while (toCompare.compareTo(showDate)==0) {
-    			String timeString = show.getTime().getHours()+":"+show.getTime().getMinutes();
-    			JLabel timeLabel = new JLabel(timeString);
-    			JButton time = new JButton (timeString);
-    			showings.remove(show);
-    			show = (Showing)iterator.next();
-    			toCompare = show.getTime();
+    		while (showingIterator.hasNext()) {
+    			Showing show = (Showing) showingIterator.next();
+    			JLabel timeLabel = new JLabel(show.getTime().getTimeString());
+    			JButton time = new JButton (show.getTime().getTimeString());
     			timeLabel.setLabelFor(time);
     			time.addActionListener(SListener);
     			time.setFont(labelFont);
@@ -200,6 +198,41 @@ public class MoviePage extends JFrame{
 	
 	public void open() {
 		setVisible(true);
+	}
+	
+	private ArrayList<ArrayList<Showing>> getShowingsPerDate(ArrayList<Showing> allShowings){
+		ArrayList<ArrayList<Showing>> showingsPerDate = new ArrayList<ArrayList<Showing>>();
+		int index=0;
+		int size=allShowings.size();
+		boolean found=false;
+		while (index<size) {
+			Showing show = allShowings.get(index);
+			if (showingsPerDate.size()==0) {
+				ArrayList<Showing> day = new ArrayList<Showing>();
+				day.add(show);
+				showingsPerDate.add(day);
+				index++;
+				continue;
+			}
+			else {
+				for (int i=0; i<showingsPerDate.size();i++) {
+					MyDate toCompare = showingsPerDate.get(i).get(0).getTime();
+					if (toCompare.compareDates(show.getTime())) {
+						showingsPerDate.get(i).add(show);
+						found=true;
+						break;
+					}
+				}
+				if (!found) {
+					ArrayList<Showing> day = new ArrayList<Showing>();
+					day.add(show);
+					showingsPerDate.add(day);
+				}
+				index++;
+				found=false;
+			}
+		}
+		return showingsPerDate;
 	}
 	
 	
