@@ -18,6 +18,10 @@ public class Showing {
         this.plan = plan;
     }
 
+    public void addSeat(Seat seat){
+        plan.addSeat(seat);
+    }
+
     public Movie getMovie(){
         return movie;
     }

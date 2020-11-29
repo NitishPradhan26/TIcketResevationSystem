@@ -10,7 +10,7 @@ public class SeatingPlan {
         this.seats = seats;
     }
 
-    public void addSeat(){
-
+    public void addSeat(Seat seat){
+        seats.add(seat);
     }
 }

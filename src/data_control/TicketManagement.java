@@ -1,5 +1,6 @@
 package data_control;
 
+import theatre_elements.Seat;
 import theatre_elements.Showing;
 import transaction_elements.Ticket;
 import users.User;
@@ -12,14 +13,16 @@ public class TicketManagement {
         this.dc = dc;
     }
 
-    //TODO finish function once combined
     public void purchaseSeat(User user, Showing showing, char row, char col){
-        //showing.addSeat(new Seat())
+        Seat seat = new Seat(row, col);
+        showing.addSeat(seat);
         int ticketNo;
         do{
             ticketNo = (int)(Math.random() * 10000d);
         } while(dc.ticketList.getTicket(ticketNo) != null);
-        //dc.ticketList.addTicket(new Ticket(ticketNo, seat, user, 7.99f, false));
+        Ticket ticket = new Ticket(ticketNo, seat, user, showing, 7.99f, false);
+        seat.setTicket(ticket);
+        dc.ticketList.addTicket(ticket);
     }
 
     //TODO finish function once combined
