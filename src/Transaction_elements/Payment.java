@@ -12,6 +12,14 @@ public class Payment {
     private float ammount;
 
 
+
+    public  Payment(){
+        this.creditCard = null;
+        this.bank = null;
+        this.timeStamp = null;
+        this.ammount = 0;
+
+    }
     public Payment(CreditCard CreditCard,Financial_Institution Bank, float Ammount){
         this.creditCard = CreditCard;
         this.bank = Bank;

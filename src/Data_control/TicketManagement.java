@@ -2,6 +2,7 @@ package Data_control;
 
 import Theatre_elements.Seat;
 import Theatre_elements.Showing;
+import Transaction_elements.Payment;
 import Transaction_elements.Ticket;
 import User.*;
 
@@ -16,13 +17,17 @@ public class TicketManagement {
     }
 
     public void purchaseSeat(User user, Showing showing, String row, int col){
+       // This function also needs to have a credit card object as an argument
+
         Seat seat = new Seat(row, col);
         showing.getPlan().purchaseSeat(seat);
         int ticketNo;
         do{
             ticketNo = (int)(Math.random() * 10000d);
         } while(dc.ticketList.getTicket(ticketNo) != null);
-        Ticket ticket = new Ticket(ticketNo, seat, user, showing, 7.99f, false);
+
+        Payment payment = new Payment(); // Need to add argument (CreditCard CreditCard,Financial_Institution Bank, float Ammount)
+        Ticket ticket = new Ticket(ticketNo, seat, user, showing, 7.99f, false, payment);
         seat.setPurchaser(ticket);
         dc.ticketList.addTicket(ticket);
     }
@@ -38,11 +43,18 @@ public class TicketManagement {
 
     public void cancelTicket(int ticketId){
         Ticket ticket = dc.ticketList.getTicket(ticketId);
-        float refund = ticket.getPrice();
-        if(!(ticket.getUser() instanceof Registered_user)){
-            refund *= 0.85f;
+
+        if( ticket == null){
+
+            System.out.println(" Ticket not found in. Please enter a valid number..");
         }
-        ticket.refundTicket();
-        ticket.getUser().setCredit(ticket.getUser().getCredit() + refund);
+
+        else {
+
+            System.out.println(" Ticket found. Processing");
+            ticket.refundTicket();
+
+        }
+
     }
 }
