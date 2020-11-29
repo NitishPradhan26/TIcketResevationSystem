@@ -29,6 +29,7 @@ public class RegisterForm extends JFrame{
 	private JLabel password = new JLabel("Password:");
 	private JPasswordField passwordInput = new JPasswordField(15); 
 	private JLabel bankInfo = new JLabel("Banking Information");
+	private JLabel debitCard = new JLabel("Debit/");
 	private JLabel creditCard = new JLabel("Credit Card:");
 	private JTextField creditCardInput = new JTextField(15);
 	private JLabel expiryDate = new JLabel("Expiry:");
@@ -134,35 +135,39 @@ public class RegisterForm extends JFrame{
 		bankInfo.setFont(labelFont);
 		contentLayout.putConstraint(SpringLayout.WEST, bankInfo, 85, SpringLayout.WEST, this);
 		contentLayout.putConstraint(SpringLayout.NORTH, bankInfo, 255, SpringLayout.NORTH, this);
+		debitCard.setFont(labelFont);
+		debitCard.setLabelFor(creditCardInput);
+		contentLayout.putConstraint(SpringLayout.WEST, debitCard, 7, SpringLayout.WEST, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, debitCard, 275, SpringLayout.NORTH, this);
 		creditCard.setFont(labelFont);
 		creditCard.setLabelFor(creditCardInput);
 		creditCardInput.setFont(fieldFont);
 		//sets constraints for location of password label and its field 
 		contentLayout.putConstraint(SpringLayout.WEST, creditCard, 7, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, creditCard, 285, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, creditCard, 295, SpringLayout.NORTH, this);
 		contentLayout.putConstraint(SpringLayout.WEST, creditCardInput, 75, SpringLayout.EAST, name);
-		contentLayout.putConstraint(SpringLayout.NORTH, creditCardInput, 285, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, creditCardInput, 295, SpringLayout.NORTH, this);
 		expiryDate.setFont(labelFont);
 		expiryDate.setLabelFor(expiryDateInput);
 		expiryDateInput.setFont(fieldFont);
 		//sets constraints for location of expiry date label and its field 
 		contentLayout.putConstraint(SpringLayout.WEST, expiryDate, 7, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, expiryDate, 315, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, expiryDate, 325, SpringLayout.NORTH, this);
 		contentLayout.putConstraint(SpringLayout.WEST, expiryDateInput, 75, SpringLayout.EAST, name);
-		contentLayout.putConstraint(SpringLayout.NORTH, expiryDateInput, 315, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, expiryDateInput, 325, SpringLayout.NORTH, this);
 		cvv.setFont(labelFont);
 		cvv.setLabelFor(cvvInput);
 		cvvInput.setFont(fieldFont);
 		contentLayout.putConstraint(SpringLayout.WEST, cvv, 7, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, cvv, 345, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, cvv, 355, SpringLayout.NORTH, this);
 		contentLayout.putConstraint(SpringLayout.WEST, cvvInput, 75, SpringLayout.EAST, name);
-		contentLayout.putConstraint(SpringLayout.NORTH, cvvInput, 345, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, cvvInput, 355, SpringLayout.NORTH, this);
 		registerButton.setFont(labelFont);
 		Color buttonColor = new Color(237,246,249);
 		registerButton.setBackground(buttonColor);
 		//sets constraints for location of register button
 		contentLayout.putConstraint(SpringLayout.WEST, registerButton, 130, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, registerButton, 390, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, registerButton, 400, SpringLayout.NORTH, this);
 		
 		center.setBackground(new Color(131,197,190));
 		center.add(name);
@@ -182,6 +187,7 @@ public class RegisterForm extends JFrame{
 		center.add(password);
 		center.add(passwordInput);
 		center.add(bankInfo);
+		center.add(debitCard);
 		center.add(creditCard);
 		center.add(creditCardInput);
 		center.add(expiryDate);
@@ -248,6 +254,8 @@ public class RegisterForm extends JFrame{
 //	public void getUserInfo() {
 //		//puts all info in user object
 //	}
+	
+	
 	
 	public void setUsername() {
 		usernameInput.setText(getStringFromTextBox(emailInput));
