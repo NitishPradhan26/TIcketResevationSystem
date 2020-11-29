@@ -106,6 +106,13 @@ public class Homepage extends JFrame {
 		displayNorthPanel();
 	}
 	
+	public String getUsername() {
+		return userName;
+	}
+	
+	public boolean getRegisteredUser() {
+		return registeredUser;
+	}
 	
 	public void closeHomepage() {
 		setVisible(false);

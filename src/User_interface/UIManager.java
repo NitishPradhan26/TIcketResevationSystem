@@ -76,6 +76,10 @@ public class UIManager {
 		moviepage.setVisible(false);
 		moviepage.dispose();
 	}
+	
+	public boolean registeredUser() {
+		return homepage.getRegisteredUser();
+	}
 	public void addListenersToHome(){
 		homepage.addCancelTicketListener(new navigateHomeToCancel());
 		homepage.addRegisterListener(new navigateHomeToRegister());
@@ -104,6 +108,10 @@ public class UIManager {
 	
 	public void setUsername(String username) {
 		homepage.setUsername(username);
+	}
+	
+	public String getUsername() {
+		return homepage.getUsername();
 	}
 	public class navigateHomeToCancel implements ActionListener{
 		@Override

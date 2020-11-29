@@ -4,11 +4,16 @@ import javax.swing.*;
 
 import Data_control.DataController;
 import Data_control.TicketManagement;
+import Theatre_elements.Showing;
+import User.User;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 public class PaymentPage extends JFrame{
 	private JLabel title = new JLabel("Ticket Reservation System");
@@ -24,6 +29,8 @@ public class PaymentPage extends JFrame{
 	private JTextField creditCardInput = new JTextField(15);
 	private JLabel creditCardHolder = new JLabel("Name:");
 	private JTextField creditCardHolderInput = new JTextField(15);
+	private JLabel email = new JLabel("Email:");
+	private JTextField emailInput = new JTextField(15);
 	private JLabel expiryDate = new JLabel("Expiry:");
 	private JTextField expiryDateInput = new JTextField(15);
 	private JLabel cvv = new JLabel("CVV");
@@ -35,8 +42,10 @@ public class PaymentPage extends JFrame{
 	private JButton cancel = new JButton("Cancel");
 	private DataController dataControl;
 	private TicketManagement ticketManager;
+	private ArrayList<String> seats;
+	private Showing show;
 	
-	public PaymentPage() {
+	public PaymentPage(Showing show, ArrayList<String> seats) {
 		super("Payment Page");
 		setTitle("Payment");
 		setSize(new Dimension(400,320));
@@ -45,6 +54,8 @@ public class PaymentPage extends JFrame{
 		setLayout(new BorderLayout());
 		dataControl = DataController.dataController();
 		ticketManager = DataController.dataController().ticketManager;
+		this.show=show;
+		this.seats=seats;
 		
 		//sets title
 		north.setBackground(new Color(0,109,119));
@@ -77,41 +88,50 @@ public class PaymentPage extends JFrame{
 		contentLayout.putConstraint(SpringLayout.NORTH, creditCardHolder, 70, SpringLayout.NORTH, this);
 		contentLayout.putConstraint(SpringLayout.WEST, creditCardHolderInput, 15, SpringLayout.EAST, creditCard);
 		contentLayout.putConstraint(SpringLayout.NORTH, creditCardHolderInput, 70, SpringLayout.NORTH, this);
+		email.setFont(labelFont);
+		email.setLabelFor(emailInput);
+		emailInput.setFont(fieldFont);
+		contentLayout.putConstraint(SpringLayout.WEST, email, 7, SpringLayout.WEST, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, email, 100, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.WEST, emailInput, 15, SpringLayout.EAST, creditCard);
+		contentLayout.putConstraint(SpringLayout.NORTH, emailInput, 100, SpringLayout.NORTH, this);
 		expiryDate.setFont(labelFont);
 		expiryDate.setLabelFor(expiryDateInput);
 		expiryDateInput.setFont(fieldFont);
 		//sets constraints for location of expiry date label and its field 
 		contentLayout.putConstraint(SpringLayout.WEST, expiryDate, 7, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, expiryDate, 100, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, expiryDate, 130, SpringLayout.NORTH, this);
 		contentLayout.putConstraint(SpringLayout.WEST, expiryDateInput, 15, SpringLayout.EAST, creditCard);
-		contentLayout.putConstraint(SpringLayout.NORTH, expiryDateInput, 100, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, expiryDateInput, 130, SpringLayout.NORTH, this);
 		cvv.setFont(labelFont);
 		cvv.setLabelFor(cvvInput);
 		cvvInput.setFont(fieldFont);
 		contentLayout.putConstraint(SpringLayout.WEST, cvv, 7, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, cvv, 130, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, cvv, 160, SpringLayout.NORTH, this);
 		contentLayout.putConstraint(SpringLayout.WEST, cvvInput, 15, SpringLayout.EAST, creditCard);
-		contentLayout.putConstraint(SpringLayout.NORTH, cvvInput, 130, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, cvvInput, 160, SpringLayout.NORTH, this);
 		
 		DecimalFormat df = new DecimalFormat("##.##");
 		balance = new JLabel("Balance: $"+df.format(balanceDue));
 		balance.setFont(labelFont);
 		contentLayout.putConstraint(SpringLayout.WEST, balance, 7, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, balance, 160, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, balance, 190, SpringLayout.NORTH, this);
 		pay.setFont(labelFont);
 		pay.setBackground(buttonColor);
 		contentLayout.putConstraint(SpringLayout.WEST, pay, 70, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, pay, 190, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, pay, 210, SpringLayout.NORTH, this);
 		cancel.setFont(labelFont);
 		cancel.setBackground(buttonColor);
 		cancel.addActionListener(new cancelPaymentListener());
 		contentLayout.putConstraint(SpringLayout.WEST, cancel, 210, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, cancel, 190, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, cancel, 210, SpringLayout.NORTH, this);
 		center.add(bankInfo);
 		center.add(creditCard);
 		center.add(creditCardInput);
 		center.add(creditCardHolder);
 		center.add(creditCardHolderInput);
+		center.add(email);
+		center.add(emailInput);
 		center.add(expiryDate);
 		center.add(expiryDateInput);
 		center.add(cvv);
@@ -132,6 +152,14 @@ public class PaymentPage extends JFrame{
 		dispose();
 	}
 	
+	public String getName() {
+		return creditCardHolderInput.getText();
+	}
+	
+	public String getEmail() {
+		return emailInput.getText();
+	}
+	
 	public class cancelPaymentListener implements ActionListener {
 
 		@Override
@@ -148,13 +176,27 @@ public class PaymentPage extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//multiple seats
+			HashMap<Integer, Character> rowMapping = new HashMap<Integer, Character>();
+			char j='A';
+			for (int i=0; i<5; i++) {
+				rowMapping.put(i, j);
+				j++;
+			}
+			Random rand = new Random();
+			User u = new User(getName(), null, null, getEmail(), rand.nextInt(1000)+1000, 0 );
+			for (String s: seats) {
+				int seat = Integer.parseInt(s);
+				int first_index = seat/10;
+				int second_index = seat%10;
+				ticketManager.purchaseSeat(u, show, rowMapping.get(first_index).toString(), second_index);
+			}
+			JOptionPane.showMessageDialog(getParent(), "Purchase successful!");
 		}
 		
 	}
 	
-	public static void main(String[] args) {
-		PaymentPage pay = new PaymentPage();
-		pay.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		PaymentPage pay = new PaymentPage();
+//		pay.setVisible(true);
+//	}
 }

@@ -2,14 +2,21 @@ package User_interface;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import Data_control.DataController;
+import Data_control.TicketManagement;
+import Theatre_elements.Showing;
+import User.User;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SeatSelection extends JFrame{
 	private String movie;
 	private String showing;
+	private Showing show;
 	private int [][] seats = new int [5][5];
 	private ArrayList<String> userSelectedSeats = new ArrayList<String>();
 	private JLabel title = new JLabel("Ticket Reservation System");
@@ -125,6 +132,10 @@ public class SeatSelection extends JFrame{
 		dispose();
 	}
 	
+	public void setShow(Showing show) {
+		this.show=show;
+	}
+	
 	public class selectSeatListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -161,10 +172,46 @@ public class SeatSelection extends JFrame{
 			int value = JOptionPane.showConfirmDialog(getParent(), message);
 			if (value==JOptionPane.YES_OPTION) {
 				//send seat selection to database, get payment info 
-				PaymentPage payment = new PaymentPage();
-				float value1 = (float) ((float)userSelectedSeats.size()*10.0);
-				payment.setBalanceDue(value1);
-				payment.setVisible(true);
+				UIManager manager = UIManager.getUIManager();
+				if (manager.registeredUser()) {
+					DataController dc = DataController.dataController();
+					TicketManagement tm = dc.ticketManager;
+					User u = dc.getUser(manager.getUsername());
+					if (u==null) {
+						JOptionPane.showMessageDialog(getParent(), "Account not found. Transaction cancelled.");
+						close();
+					}
+					else {
+						HashMap<Integer, Character> rowMapping = new HashMap<Integer, Character>();
+						char j='A';
+						for (int i=0; i<5; i++) {
+							rowMapping.put(i, j);
+							j++;
+						}
+						for (String s: userSelectedSeats) {
+							int seat = Integer.parseInt(s);
+							int first_index = seat/10;
+							int second_index = seat%10;
+							tm.purchaseSeat(u, show, rowMapping.get(first_index).toString(), second_index);
+						}
+						JOptionPane.showMessageDialog(getParent(), "Purchase successful!");
+					}
+				}
+				else {
+					float balance = (float) ((float)userSelectedSeats.size()*10.0);
+					int response = JOptionPane.showConfirmDialog(getParent(), "Are you a registered user?");
+					if (response==JOptionPane.YES_OPTION) {
+						JOptionPane.showMessageDialog(getParent(), "Please navigate to the homepage and login using your name and password, and try again.");
+					}
+					else if (response==JOptionPane.NO_OPTION){
+						PaymentPage payment = new PaymentPage(show, userSelectedSeats);
+						payment.setBalanceDue(balance);
+						payment.setVisible(true);
+						close();
+					}
+				}
+			}
+			if (value==JOptionPane.CANCEL_OPTION) {
 				close();
 			}
 		}

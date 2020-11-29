@@ -162,7 +162,7 @@ public class MoviePage extends JFrame{
     		while (showingIterator.hasNext()) {
     			Showing show = (Showing) showingIterator.next();
     			JLabel timeLabel = new JLabel(show.getTime().getTimeString());
-    			JButton time = new JButton (show.getTime().getTimeString());
+    			showingButton time = new showingButton (show, show.getTime().getTimeString());
     			timeLabel.setLabelFor(time);
     			time.addActionListener(SListener);
     			time.setFont(labelFont);
@@ -257,8 +257,9 @@ public class MoviePage extends JFrame{
 	public class selectShowingListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JButton button = (JButton)e.getSource();
-			seatSelection = new SeatSelection((String)movieSelection.getSelectedItem(), (String)button.getText());
+			showingButton button = (showingButton)e.getSource();
+			seatSelection = new SeatSelection((String)movieSelection.getSelectedItem(), (String)button.getShowing().getTime().toString());
+			seatSelection.setShow(button.getShowing());
 			seatSelection.addBackListener(new navigateSeatToMovie());
 			close();
 			seatSelection.setVisible(true);

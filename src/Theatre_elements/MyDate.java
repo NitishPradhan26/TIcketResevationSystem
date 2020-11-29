@@ -40,7 +40,7 @@ public class MyDate {
     }
     
     public String getTimeString() {
-    	String time = Integer.toString(hour)+":"+Integer.toString(minute);
+    	String time = String.format("%02d", hour)+":"+String.format("%02d", minute);
     	return time;
     }
     
