@@ -3,7 +3,9 @@ package Data_control;
 import Theatre_elements.Seat;
 import Theatre_elements.Showing;
 import Transaction_elements.Ticket;
-import User.User;
+import User.*;
+
+import java.util.ArrayList;
 
 public class TicketManagement {
 
@@ -15,7 +17,7 @@ public class TicketManagement {
 
     public void purchaseSeat(User user, Showing showing, String row, int col){
         Seat seat = new Seat(row, col);
-        showing.getPlan().addSeat(seat);
+        showing.getPlan().purchaseSeat(seat);
         int ticketNo;
         do{
             ticketNo = (int)(Math.random() * 10000d);
@@ -25,8 +27,22 @@ public class TicketManagement {
         dc.ticketList.addTicket(ticket);
     }
 
-    //TODO finish function once combined
-    public void cancelTicket(int ticketId){
+    public ArrayList<Ticket> getUserTickets(int userNum){
+        for(User u:dc.users){
+            if(u.getAccountNum() == userNum){
+                return dc.ticketList.getUserTickets(u);
+            }
+        }
+        return null;
+    }
 
+    public void cancelTicket(int ticketId){
+        Ticket ticket = dc.ticketList.getTicket(ticketId);
+        float refund = ticket.getPrice();
+        if(!(ticket.getUser() instanceof Registered_user)){
+            refund *= 0.85f;
+        }
+        ticket.refundTicket();
+        ticket.getUser().setCredit(ticket.getUser().getCredit() + refund);
     }
 }

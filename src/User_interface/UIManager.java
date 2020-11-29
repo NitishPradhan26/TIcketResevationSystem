@@ -3,7 +3,6 @@ package User_interface;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 public class UIManager {
 	private Homepage homepage;
 	private CancellationPage cancelpage;

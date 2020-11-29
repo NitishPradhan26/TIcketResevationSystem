@@ -21,6 +21,14 @@ public class Ticket {
         this.cancelled = cancelled;
     }
 
+    public void refundTicket(){
+        cancelled = true;
+    }
+
+    public boolean getCancelled(){
+        return cancelled;
+    }
+
     public User getUser(){
         return user;
     }

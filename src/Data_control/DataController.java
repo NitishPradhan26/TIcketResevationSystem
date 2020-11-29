@@ -1,8 +1,10 @@
 package Data_control;
 
 import Theatre_elements.Movie;
+import Theatre_elements.Seat;
 import Theatre_elements.Showing;
 import Theatre_elements.Theatre;
+import Transaction_elements.Ticket;
 import User.User;
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ public class DataController {
     private TheatreCatalogue theatreCatalogue;
     private ArrayList<Showing> showings;
     TicketList ticketList;
-    private ArrayList<User> users;
+    ArrayList<User> users;
     public TicketManagement ticketManager;
 
     private static DataController dataController;
@@ -36,10 +38,10 @@ public class DataController {
         return theatreCatalogue.getTheatres();
     }
 
-    public ArrayList<Showing> getShowings(String movieName, String theatreName){
+    public ArrayList<Showing> getShowings(String movieName, String theatreName) {
         ArrayList<Showing> goodShowings = new ArrayList<>();
-        for(Showing s: showings){
-            if(s.getMovie().getName().equals(movieName) && s.getTheatre().getName().equals(theatreName)){
+        for (Showing s : showings) {
+            if (s.getMovie().getName().equals(movieName) && s.getTheatre().getName().equals(theatreName)) {
                 goodShowings.add(s);
             }
         }
@@ -55,9 +57,18 @@ public class DataController {
         return null;
     }
 
-    public void registerUser(String name, String username, String password, String email, float credit){
-        //generate new account num
-        //users.add(new User(name, username, password, email, credit));
+    public void registerUser(String name, String username, String password, String email) {
+        int accountNo;
+        User user = null;
+        do {
+            accountNo = (int) (Math.random() * 10000d);
+            for (User u : users) {
+                if (u.getAccountNum() == accountNo) {
+                    user = u;
+                }
+            }
+        } while (user == null);
+        users.add(new User(name, username, password, email, accountNo, 0f));
     }
 
     public static DataController dataController(){
@@ -68,9 +79,15 @@ public class DataController {
     }
 
     public static void main(String[] args){
-        dataController().getMovies();
-        dataController().getTheatres();
-        dataController().getShowings("Kung Fu Hustle", "Theatre");
+        dataController().getMovies(); //get all movies as arraylist
+        dataController().getTheatres(); //get all theatres as arraylist
+        ArrayList<Showing> s = dataController().getShowings("Kung Fu Hustle", "Theatre"); //get all showings for given movie and theatre
+        dataController().registerUser("Bob", "benis@benis.com", "eee", "benis@benis.com"); //register new user
+        User u = dataController().loginUser("bigsina", "assignmentiseasy"); //login a user
+        dataController().loginUser("uwu", "uwu"); //fail login
+        dataController().ticketManager.purchaseSeat(u, s.get(0), "A", 2); //purchase ticket
+        ArrayList<Ticket> t = dataController().ticketManager.getUserTickets(u.getAccountNum()); //get a users tickets
+        dataController().ticketManager.cancelTicket(t.get(0).getTicketNo()); //cancel a ticket
     }
 
 }

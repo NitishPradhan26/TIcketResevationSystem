@@ -25,7 +25,7 @@ public class Seat {
         purchaser = null;
     }
 
-    public boolean isAvailble() {
+    public boolean isAvailable() {
         if (purchaser == null) {
             return true;
         }

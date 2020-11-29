@@ -37,6 +37,4 @@ public class User {
     public void setCredit(float credit) {
         this.credit = credit;
     }
-
-
 }

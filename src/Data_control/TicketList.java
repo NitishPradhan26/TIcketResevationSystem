@@ -1,6 +1,7 @@
 package Data_control;
 
 import Transaction_elements.Ticket;
+import User.User;
 
 import java.util.ArrayList;
 
@@ -22,5 +23,15 @@ public class TicketList {
             }
         }
         return null;
+    }
+
+    public ArrayList<Ticket> getUserTickets(User user){
+        ArrayList<Ticket> userTickets = new ArrayList<>();
+        for(Ticket t:tickets){
+            if(t.getUser() == user){
+                userTickets.add(t);
+            }
+        }
+        return userTickets;
     }
 }
