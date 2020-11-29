@@ -3,10 +3,9 @@ package Data_control;
 import Transaction_elements.Ticket;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TicketList {
-    ArrayList<Ticket> tickets;
+    private ArrayList<Ticket> tickets;
 
     public TicketList(ArrayList<Ticket> tickets){
         this.tickets = tickets;

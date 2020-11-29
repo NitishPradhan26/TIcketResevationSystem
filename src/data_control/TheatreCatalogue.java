@@ -19,4 +19,8 @@ public class TheatreCatalogue {
         }
         return null;
     }
+
+    public ArrayList<Theatre> getTheatres(){
+        return theatres;
+    }
 }

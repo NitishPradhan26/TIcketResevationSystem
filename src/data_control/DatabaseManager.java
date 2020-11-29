@@ -7,6 +7,9 @@ import User.Registered_user;
 import User.User;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class DatabaseManager {
@@ -110,13 +113,15 @@ public class DatabaseManager {
                 String movieName = showingSet.getString(1);
                 String theatreName = showingSet.getString(2);
                 String showingTime = showingSet.getString(3);
-                Showing showing = new Showing(findMovie(movieName), findTheatre(theatreName), showingTime);
+                DateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy h:mma");
+                java.util.Date date = dateFormat.parse(showingTime);
+                Showing showing = new Showing(findMovie(movieName), findTheatre(theatreName), date);
                 SeatingPlan plan = new SeatingPlan(loadSeats(movieName, theatreName, showingTime, showing));
                 showing.setPlan(plan);
                 showings.add(showing);
             }
         }
-        catch (SQLException e){
+        catch (SQLException | ParseException e){
             e.printStackTrace();
         }
     }
@@ -126,8 +131,8 @@ public class DatabaseManager {
         ResultSet seatSet = queryDB("SELECT Row, Col, TicketNo FROM seat WHERE MovieName='" + movie + "' AND TheatreName='" + theatre + "' AND ShowTime='" + time + "'");
         try {
             while (seatSet.next()) {
-                Seat seat = new Seat(seatSet.getString(1).charAt(0), seatSet.getString(2).charAt(0));
-                seat.setTicket(loadTicket(seatSet.getInt(3), seat, showing));
+                Seat seat = new Seat(seatSet.getString(1), Integer.parseInt(seatSet.getString(2)));
+                seat.setPurchaser(loadTicket(seatSet.getInt(3), seat, showing));
                 seats.add(seat);
             }
         }

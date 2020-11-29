@@ -32,4 +32,8 @@ public class Ticket {
     public int getTicketNo() {
         return ticketNo;
     }
+
+    public void setSeat(Seat seat) {
+        this.seat = seat;
+    }
 }

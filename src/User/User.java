@@ -18,6 +18,14 @@ public class User {
         this.credit = credit;
     }
 
+    public String getUsername(){
+        return username;
+    }
+
+    public String getPassword(){
+        return password;
+    }
+
     public int getAccountNum(){
         return accountNum;
     }

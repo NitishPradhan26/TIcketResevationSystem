@@ -17,7 +17,9 @@ public class DataController {
     private ArrayList<User> users;
     public TicketManagement ticketManager;
 
-    public DataController(){
+    private static DataController dataController;
+
+    private DataController(){
         dbM = new DatabaseManager("localhost\\SQLEXPRESS02:60490");
         ticketList = new TicketList(dbM.tickets);
         users = dbM.users;
@@ -27,12 +29,11 @@ public class DataController {
         showings = dbM.showings;
     }
 
-    public Movie searchMovie(String name){
-        return movieCatalogue.searchMovie(name);
+    public ArrayList<Movie> getMovies(){
+        return movieCatalogue.getMovies();
     }
-
-    public Theatre searchTheatre(String name){
-        return theatreCatalogue.searchTheatre(name);
+    public ArrayList<Theatre> getTheatres(){
+        return theatreCatalogue.getTheatres();
     }
 
     public ArrayList<Showing> getShowings(String movieName, String theatreName){
@@ -45,11 +46,31 @@ public class DataController {
         return goodShowings;
     }
 
+    public User loginUser(String username, String password){
+        for(User u:users){
+            if(u.getUsername().equals(username) && u.getPassword().equals(password)){
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public void registerUser(String name, String username, String password, String email, float credit){
+        //generate new account num
+        //users.add(new User(name, username, password, email, credit));
+    }
+
+    public static DataController dataController(){
+        if(dataController == null){
+            dataController = new DataController();
+        }
+        return dataController;
+    }
+
     public static void main(String[] args){
-        DataController dc = new DataController();
-        System.out.println(dc.searchMovie("Kung Fu Hustle").getName());
-        System.out.println(dc.searchTheatre("Theatre").getName());
-        System.out.println(dc.getShowings("Kung Fu Hustle", "Theatre").get(0).getTime());
+        dataController().getMovies();
+        dataController().getTheatres();
+        dataController().getShowings("Kung Fu Hustle", "Theatre");
     }
 
 }

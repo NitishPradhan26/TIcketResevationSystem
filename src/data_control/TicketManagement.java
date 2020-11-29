@@ -13,15 +13,15 @@ public class TicketManagement {
         this.dc = dc;
     }
 
-    public void purchaseSeat(User user, Showing showing, char row, char col){
+    public void purchaseSeat(User user, Showing showing, String row, int col){
         Seat seat = new Seat(row, col);
-        showing.addSeat(seat);
+        showing.getPlan().addSeat(seat);
         int ticketNo;
         do{
             ticketNo = (int)(Math.random() * 10000d);
         } while(dc.ticketList.getTicket(ticketNo) != null);
         Ticket ticket = new Ticket(ticketNo, seat, user, showing, 7.99f, false);
-        seat.setTicket(ticket);
+        seat.setPurchaser(ticket);
         dc.ticketList.addTicket(ticket);
     }
 

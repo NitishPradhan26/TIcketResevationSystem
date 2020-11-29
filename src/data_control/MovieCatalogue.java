@@ -19,4 +19,8 @@ public class MovieCatalogue {
         }
         return null;
     }
+
+    public ArrayList<Movie> getMovies() {
+        return movies;
+    }
 }
