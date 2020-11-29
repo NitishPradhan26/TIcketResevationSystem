@@ -71,6 +71,7 @@ public class LoginPage extends JFrame{
 		south.setLayout(new BorderLayout());
 		JPanel registerPanel = new JPanel(new FlowLayout());
 		registerPanel.setBackground(new Color(0,109,119));
+		registerUser.setForeground(Color.white);;
 		registerUser.setFont(labelFont);
 		registerButton.setFont(labelFont);
 		registerButton.setBackground(buttonColor);

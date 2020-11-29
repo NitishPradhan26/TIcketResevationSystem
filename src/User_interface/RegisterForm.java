@@ -2,6 +2,8 @@ package User_interface;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
@@ -20,6 +22,8 @@ public class RegisterForm extends JFrame{
 	private JComboBox provinceInput;
 	private JLabel postalcode = new JLabel("Postal Code:");
 	private JTextField postalcodeInput = new JTextField(15);
+	private JLabel email = new JLabel("Email:");
+	private JTextField emailInput = new JTextField(15);
 	private JLabel username = new JLabel("Username:");
 	private JTextField usernameInput = new JTextField(15);
 	private JLabel password = new JLabel("Password:");
@@ -102,54 +106,63 @@ public class RegisterForm extends JFrame{
 		contentLayout.putConstraint(SpringLayout.NORTH, postalcode, 140, SpringLayout.NORTH, this);
 		contentLayout.putConstraint(SpringLayout.WEST, postalcodeInput, 75, SpringLayout.EAST, name);
 		contentLayout.putConstraint(SpringLayout.NORTH, postalcodeInput, 140, SpringLayout.NORTH, this);
+		email.setFont(labelFont);
+		email.setLabelFor(emailInput);
+		emailInput.setFont(fieldFont);
+		addListenerToEmail();
+		//sets constraints for location of email label and its field 
+		contentLayout.putConstraint(SpringLayout.WEST, email, 7, SpringLayout.WEST, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, email, 170, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.WEST, emailInput, 75, SpringLayout.EAST, name);
+		contentLayout.putConstraint(SpringLayout.NORTH, emailInput, 170, SpringLayout.NORTH, this);
 		username.setFont(labelFont);
 		username.setLabelFor(usernameInput);
 		usernameInput.setFont(fieldFont);
 		//sets constraints for location of username label and its field 
 		contentLayout.putConstraint(SpringLayout.WEST, username, 7, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, username, 170, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, username, 200, SpringLayout.NORTH, this);
 		contentLayout.putConstraint(SpringLayout.WEST, usernameInput, 75, SpringLayout.EAST, name);
-		contentLayout.putConstraint(SpringLayout.NORTH, usernameInput, 170, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, usernameInput, 200, SpringLayout.NORTH, this);
 		password.setFont(labelFont);
 		password.setLabelFor(passwordInput);
 		passwordInput.setFont(fieldFont);
 		//sets constraints for location of password label and its field 
 		contentLayout.putConstraint(SpringLayout.WEST, password, 7, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, password, 200, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, password, 230, SpringLayout.NORTH, this);
 		contentLayout.putConstraint(SpringLayout.WEST, passwordInput, 75, SpringLayout.EAST, name);
-		contentLayout.putConstraint(SpringLayout.NORTH, passwordInput, 200, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, passwordInput, 230, SpringLayout.NORTH, this);
 		bankInfo.setFont(labelFont);
 		contentLayout.putConstraint(SpringLayout.WEST, bankInfo, 85, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, bankInfo, 230, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, bankInfo, 255, SpringLayout.NORTH, this);
 		creditCard.setFont(labelFont);
 		creditCard.setLabelFor(creditCardInput);
 		creditCardInput.setFont(fieldFont);
 		//sets constraints for location of password label and its field 
 		contentLayout.putConstraint(SpringLayout.WEST, creditCard, 7, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, creditCard, 260, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, creditCard, 285, SpringLayout.NORTH, this);
 		contentLayout.putConstraint(SpringLayout.WEST, creditCardInput, 75, SpringLayout.EAST, name);
-		contentLayout.putConstraint(SpringLayout.NORTH, creditCardInput, 260, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, creditCardInput, 285, SpringLayout.NORTH, this);
 		expiryDate.setFont(labelFont);
 		expiryDate.setLabelFor(expiryDateInput);
 		expiryDateInput.setFont(fieldFont);
 		//sets constraints for location of expiry date label and its field 
 		contentLayout.putConstraint(SpringLayout.WEST, expiryDate, 7, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, expiryDate, 290, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, expiryDate, 315, SpringLayout.NORTH, this);
 		contentLayout.putConstraint(SpringLayout.WEST, expiryDateInput, 75, SpringLayout.EAST, name);
-		contentLayout.putConstraint(SpringLayout.NORTH, expiryDateInput, 290, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, expiryDateInput, 315, SpringLayout.NORTH, this);
 		cvv.setFont(labelFont);
 		cvv.setLabelFor(cvvInput);
 		cvvInput.setFont(fieldFont);
 		contentLayout.putConstraint(SpringLayout.WEST, cvv, 7, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, cvv, 320, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, cvv, 345, SpringLayout.NORTH, this);
 		contentLayout.putConstraint(SpringLayout.WEST, cvvInput, 75, SpringLayout.EAST, name);
-		contentLayout.putConstraint(SpringLayout.NORTH, cvvInput, 320, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, cvvInput, 345, SpringLayout.NORTH, this);
 		registerButton.setFont(labelFont);
 		Color buttonColor = new Color(237,246,249);
 		registerButton.setBackground(buttonColor);
 		//sets constraints for location of register button
 		contentLayout.putConstraint(SpringLayout.WEST, registerButton, 130, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, registerButton, 370, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, registerButton, 390, SpringLayout.NORTH, this);
 		
 		center.setBackground(new Color(131,197,190));
 		center.add(name);
@@ -162,6 +175,8 @@ public class RegisterForm extends JFrame{
 		center.add(provinceInput);
 		center.add(postalcode);
 		center.add(postalcodeInput);
+		center.add(email);
+		center.add(emailInput);
 		center.add(username);
 		center.add(usernameInput);
 		center.add(password);
@@ -196,6 +211,28 @@ public class RegisterForm extends JFrame{
 		add("South", south);
 	}
 	
+	private void addListenerToEmail() {
+		emailInput.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				setUsername();
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				setUsername();				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				setUsername();				
+			}
+			
+		});		
+	}
+
 	public void addLoginListener(ActionListener listener) {
 		loginButton.addActionListener(listener);
 	}
@@ -211,6 +248,10 @@ public class RegisterForm extends JFrame{
 //	public void getUserInfo() {
 //		//puts all info in user object
 //	}
+	
+	public void setUsername() {
+		usernameInput.setText(getStringFromTextBox(emailInput));
+	}
 	
 	public String getStringFromTextBox(JTextField field) {
 		return field.getText();

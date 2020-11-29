@@ -3,6 +3,7 @@ package User_interface;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class UIManager {
 	private Homepage homepage;
 	private CancellationPage cancelpage;
@@ -15,7 +16,6 @@ public class UIManager {
 		cancelpage= new CancellationPage();
 		registerpage = new RegisterForm();
 		loginpage = new LoginPage();
-		moviepage = new MoviePage();
 	}
 	
 	public void openHomepage() {
@@ -58,6 +58,7 @@ public class UIManager {
 	}
 	
 	public void openMoviePage() {
+		moviepage = new MoviePage();
 		moviepage.setVisible(true);
 		addListenersToPurchase();
 	}
@@ -171,6 +172,7 @@ public class UIManager {
 		}
 	}
 	
+
 	public static void main(String[] args) {
 		UIManager uiManager = new UIManager();
 		uiManager.openHomepage();
