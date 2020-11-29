@@ -2,7 +2,10 @@ package User_interface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import Data_control.DataController;
+
 public class LoginPage extends JFrame{
 	private JLabel title = new JLabel("Ticket Reservation System");
 	private JPanel north = new JPanel();
@@ -19,6 +22,7 @@ public class LoginPage extends JFrame{
 	private Font labelFont = new Font("Verdana", Font.BOLD, 18);
 	private Font fieldFont = new Font("Verdana", Font.PLAIN, 16);
 	private Color buttonColor = new Color(237,246,249);
+	private DataController dataControl;
 	
 	public LoginPage() {
 		super("Login Page");
@@ -27,6 +31,7 @@ public class LoginPage extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
+		dataControl = DataController.dataController();
 		
 		//sets title
 		north.setBackground(new Color(0,109,119));
@@ -57,6 +62,7 @@ public class LoginPage extends JFrame{
 		
 		loginButton.setFont(labelFont);
 		loginButton.setBackground(buttonColor);
+		loginButton.addActionListener(new loginButtonListener());
 		contentLayout.putConstraint(SpringLayout.WEST, loginButton, 20, SpringLayout.EAST, username);
 		contentLayout.putConstraint(SpringLayout.NORTH, loginButton, 80, SpringLayout.NORTH, this);
 		center.setBackground(new Color(131,197,190));
@@ -95,6 +101,30 @@ public class LoginPage extends JFrame{
 	
 	public void addBackListener(ActionListener listener) {
 		backButton.addActionListener(listener);
+	}
+	
+	public String getUsername() {
+		return usernameInput.getText();
+	}
+	
+	public String getPassword() {
+		char [] passwordArray = passwordInput.getPassword();
+		return passwordArray.toString();
+	}
+	
+	public class loginButtonListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (dataControl.loginUser(getUsername(), getPassword())==null){
+				JOptionPane.showMessageDialog(getParent(), "Username or password incorrect. Please try again.");
+			}
+			else {
+				UIManager instance = UIManager.getUIManager();
+				instance.closeLogin();
+				instance.setUsername(getUsername());
+				instance.openHomepage();
+			}
+		}
 	}
 
 }

@@ -25,6 +25,9 @@ public class SeatSelection extends JFrame{
 	private Color selectedSeatColor = new Color(153, 218, 240);
 	private Color centerBackgroundColor = new Color(131,197,190);
 	private Color takenSeatColor = new Color(111, 171, 191);
+	private final int TAKEN_SEAT = 1;
+	private final int EMPTY_SEAT = 0;
+	private final int SELECTED_SEAT = -1;
 	
 	public SeatSelection(String movie, String showing) {
 		super("Seat Selection");
@@ -84,7 +87,7 @@ public class SeatSelection extends JFrame{
 			for (int j=1; j<=5; j++) {
 				JButton seat = new JButton(Integer.toString(i)+Integer.toString(j));
 				seat.addActionListener(ssl);
-				if (seats[i-1][j-1]==1) {
+				if (seats[i-1][j-1]==TAKEN_SEAT) {
 					seat.setBackground(takenSeatColor);
 				}
 				else {
@@ -103,10 +106,10 @@ public class SeatSelection extends JFrame{
 		for (int i=0; i<5; i++) {
 			for (int j=0; j<5; j++) {
 				if (i==0) {
-					seats[i][j]=1;
+					seats[i][j]=TAKEN_SEAT;
 				}
 				else {
-					seats[i][j]=0;
+					seats[i][j]=EMPTY_SEAT;
 				}
 				
 			}
@@ -129,15 +132,15 @@ public class SeatSelection extends JFrame{
 			int seatNum = Integer.parseInt(tempButton.getText());
 			int firstIndex = (seatNum/10)-1;
 			int secondIndex = (seatNum%10)-1;
-			if (seats[firstIndex][secondIndex]==-1) {
+			if (seats[firstIndex][secondIndex]==SELECTED_SEAT) {
 				userSelectedSeats.remove(tempButton.getText());
 				tempButton.setBackground(buttonColor);
-				seats[firstIndex][secondIndex]=0;
+				seats[firstIndex][secondIndex]=EMPTY_SEAT;
 			}
-			else if (seats[firstIndex][secondIndex]==0) {
+			else if (seats[firstIndex][secondIndex]==EMPTY_SEAT) {
 				userSelectedSeats.add(tempButton.getText());
 				tempButton.setBackground(selectedSeatColor);
-				seats[firstIndex][secondIndex]=-1;
+				seats[firstIndex][secondIndex]=SELECTED_SEAT;
 			}
 			else {
 				JOptionPane.showMessageDialog(getParent(), "Seat already taken. Please select another.");
@@ -158,6 +161,11 @@ public class SeatSelection extends JFrame{
 			int value = JOptionPane.showConfirmDialog(getParent(), message);
 			if (value==JOptionPane.YES_OPTION) {
 				//send seat selection to database, get payment info 
+				PaymentPage payment = new PaymentPage();
+				float value1 = (float) ((float)userSelectedSeats.size()*10.0);
+				payment.setBalanceDue(value1);
+				payment.setVisible(true);
+				close();
 			}
 		}
 	}

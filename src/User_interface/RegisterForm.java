@@ -1,11 +1,14 @@
 package User_interface;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.*;
+
+import Data_control.DataController;
 
 public class RegisterForm extends JFrame{
 	private JLabel title = new JLabel("Ticket Reservation System");
@@ -42,6 +45,7 @@ public class RegisterForm extends JFrame{
 	private JLabel alreadyUser = new JLabel("Already a user?");
 	private JButton loginButton = new JButton("Login");
 	private JButton backButton = new JButton("Back To Homepage");
+	private DataController dataControl;
 	
 	public RegisterForm() {
 		super("Registration Page");
@@ -50,6 +54,7 @@ public class RegisterForm extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
+		dataControl = DataController.dataController();
 		
 		//sets title
 		north.setBackground(new Color(0,109,119));
@@ -165,6 +170,7 @@ public class RegisterForm extends JFrame{
 		registerButton.setFont(labelFont);
 		Color buttonColor = new Color(237,246,249);
 		registerButton.setBackground(buttonColor);
+		registerButton.addActionListener(new registerUser());
 		//sets constraints for location of register button
 		contentLayout.putConstraint(SpringLayout.WEST, registerButton, 130, SpringLayout.WEST, this);
 		contentLayout.putConstraint(SpringLayout.NORTH, registerButton, 400, SpringLayout.NORTH, this);
@@ -251,18 +257,51 @@ public class RegisterForm extends JFrame{
 		backButton.addActionListener(listener);
 	}
 	
+	public String getName() {
+		return getStringFromTextBox(nameInput);
+	}
+	
+	public String getUsername() {
+		return getStringFromTextBox(usernameInput);
+	}
+	
+	public String getPassword() {
+		char [] passwordArray = passwordInput.getPassword();
+		return passwordArray.toString();
+	}
+	
+	public String getEmail() {
+		return getStringFromTextBox(emailInput);
+	}
 //	public void getUserInfo() {
 //		//puts all info in user object
 //	}
-	
-	
 	
 	public void setUsername() {
 		usernameInput.setText(getStringFromTextBox(emailInput));
 	}
 	
-	public String getStringFromTextBox(JTextField field) {
+	private String getStringFromTextBox(JTextField field) {
 		return field.getText();
+	}
+	
+	public class registerUser implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e){
+			int response = JOptionPane.showConfirmDialog(getParent(), "You will be charged $20 for the account fee. Do you accept?");
+			if (response==JOptionPane.YES_OPTION) {
+				dataControl.registerUser(getName(), getUsername(), getPassword(), getEmail());
+				JOptionPane.showMessageDialog(getParent(), "Registration successful!");
+				UIManager instance = UIManager.getUIManager();
+				instance.closeRegisterForm();
+				instance.setUsername(getUsername());
+				instance.openHomepage();
+			}
+			else {
+				JOptionPane.showMessageDialog(getParent(), "Registration unsucessful/incomplete.");
+			}
+			
+		}
 	}
 
 }

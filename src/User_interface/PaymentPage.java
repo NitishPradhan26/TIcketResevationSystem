@@ -1,7 +1,14 @@
 package User_interface;
 
 import javax.swing.*;
+
+import Data_control.DataController;
+import Data_control.TicketManagement;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 public class PaymentPage extends JFrame{
 	private JLabel title = new JLabel("Ticket Reservation System");
@@ -20,14 +27,22 @@ public class PaymentPage extends JFrame{
 	private JLabel cvv = new JLabel("CVV");
 	private JTextField cvvInput = new JTextField(15);
 	private Color centerBackgroundColor = new Color(131,197,190);
+	private float balanceDue;
+	private JLabel balance;
+	private JButton pay = new JButton("Pay now");
+	private JButton cancel = new JButton("Cancel");
+	private DataController dataControl;
+	private TicketManagement ticketManager;
 	
 	public PaymentPage() {
 		super("Payment Page");
 		setTitle("Payment");
-		setSize(new Dimension(400,600));
+		setSize(new Dimension(400,300));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
+		dataControl = DataController.dataController();
+		ticketManager = new TicketManagement();
 		
 		//sets title
 		north.setBackground(new Color(0,109,119));
@@ -67,6 +82,21 @@ public class PaymentPage extends JFrame{
 		contentLayout.putConstraint(SpringLayout.NORTH, cvv, 100, SpringLayout.NORTH, this);
 		contentLayout.putConstraint(SpringLayout.WEST, cvvInput, 15, SpringLayout.EAST, creditCard);
 		contentLayout.putConstraint(SpringLayout.NORTH, cvvInput, 100, SpringLayout.NORTH, this);
+		
+		DecimalFormat df = new DecimalFormat("##.##");
+		balance = new JLabel("Balance: $"+df.format(balanceDue));
+		balance.setFont(labelFont);
+		contentLayout.putConstraint(SpringLayout.WEST, balance, 7, SpringLayout.WEST, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, balance, 130, SpringLayout.NORTH, this);
+		pay.setFont(labelFont);
+		pay.setBackground(buttonColor);
+		contentLayout.putConstraint(SpringLayout.WEST, pay, 70, SpringLayout.WEST, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, pay, 160, SpringLayout.NORTH, this);
+		cancel.setFont(labelFont);
+		cancel.setBackground(buttonColor);
+		cancel.addActionListener(new cancelPaymentListener());
+		contentLayout.putConstraint(SpringLayout.WEST, cancel, 210, SpringLayout.WEST, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, cancel, 160, SpringLayout.NORTH, this);
 		center.add(bankInfo);
 		center.add(creditCard);
 		center.add(creditCardInput);
@@ -74,8 +104,41 @@ public class PaymentPage extends JFrame{
 		center.add(expiryDateInput);
 		center.add(cvv);
 		center.add(cvvInput);
+		center.add(balance);
+		center.add(pay);
+		center.add(cancel);
 		
 		add("Center", center);
+	}
+	
+	public void setBalanceDue(float num) {
+		this.balanceDue=num;
+	}
+	
+	public void close() {
+		this.setVisible(false);
+		dispose();
+	}
+	
+	public class cancelPaymentListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			int response = JOptionPane.showConfirmDialog(getParent(), "Are you sure you want to cancel?");
+			if (response==JOptionPane.YES_OPTION) {
+				close();
+			}
+		}
+		
+	}
+	
+	public class paymentListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//multiple seats
+		}
+		
 	}
 	
 	public static void main(String[] args) {

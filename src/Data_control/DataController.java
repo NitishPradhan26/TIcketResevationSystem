@@ -22,20 +22,30 @@ public class DataController {
     private static DataController dataController;
 
     private DataController(){
-        dbM = new DatabaseManager("localhost\\SQLEXPRESS02:60490");
-        ticketList = new TicketList(dbM.tickets);
-        users = dbM.users;
-        movieCatalogue = new MovieCatalogue(dbM.movies);
-        theatreCatalogue = new TheatreCatalogue(dbM.theatres);
-        ticketManager = new TicketManagement(this);
-        showings = dbM.showings;
+//        dbM = new DatabaseManager("localhost\\SQLEXPRESS02:60490");
+//        ticketList = new TicketList(dbM.tickets);
+//        users = dbM.users;
+//        movieCatalogue = new MovieCatalogue(dbM.movies);
+//        theatreCatalogue = new TheatreCatalogue(dbM.theatres);
+//        ticketManager = new TicketManagement(this);
+//        showings = dbM.showings;
     }
 
-    public ArrayList<Movie> getMovies(){
-        return movieCatalogue.getMovies();
+    public ArrayList<String> getMovies(){
+        ArrayList<Movie> movieArray = movieCatalogue.getMovies();
+        ArrayList<String> movies = new ArrayList<String>();
+        for (Movie m: movieArray) {
+        	movies.add(m.getName());
+        }
+        return movies;
     }
-    public ArrayList<Theatre> getTheatres(){
-        return theatreCatalogue.getTheatres();
+    public ArrayList<String> getTheatres(){
+        ArrayList<Theatre> theatreArray = theatreCatalogue.getTheatres();
+        ArrayList<String> theatres = new ArrayList<String>();
+        for (Theatre t: theatreArray) {
+        	theatres.add(t.getName());
+        }
+        return theatres;
     }
 
     public ArrayList<Showing> getShowings(String movieName, String theatreName) {

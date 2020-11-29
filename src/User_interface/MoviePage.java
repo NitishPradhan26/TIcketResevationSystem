@@ -3,10 +3,15 @@ package User_interface;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import Data_control.DataController;
+import Theatre_elements.Showing;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class MoviePage extends JFrame{
 	private JLabel title = new JLabel("Ticket Reservation System");
@@ -24,6 +29,8 @@ public class MoviePage extends JFrame{
 	private Color centerBackgroundColor = new Color(131,197,190);
 	private Font questionFont = new Font("Verdana", Font.BOLD, 22);
 	private SeatSelection seatSelection;
+	private DataController dataControl;
+	
 	
 	public MoviePage() {
 		super("Cancellation Page");
@@ -32,6 +39,7 @@ public class MoviePage extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
+		dataControl = DataController.dataController();
 		
 		//sets title
 		north.setBackground(new Color(0,109,119));
@@ -77,30 +85,17 @@ public class MoviePage extends JFrame{
 	}
 	
 	private String[] getMovies() {
-		//make request to get movies
-		String [] movies = new String[10];
-		movies[0]="Toy Story";
-		movies[1]="Toy Story 2";
-		movies[2]="Toy Story 3";
-		movies[3]="Toy Story 4";
-		movies[4]="Wall-E";
-		movies[5]="The Incredibles";
-		movies[6]="The Incredibles 2";
-		movies[7]="Despicable Me";
-		movies[8]="Despicable Me 2";
-		movies[9]="Kung Fu Panda";
-		return movies;
-		
+		ArrayList<String> movieArray = dataControl.getMovies();
+		return (String[]) movieArray.toArray();
 	}
 	
 	private String[] getTheatres() {
-		//make request to get theatres for the movie 
-		//String requestedMovie = (String)movieSelection.getSelectedItem();
-		//send request
-		
-		String [] theatres = new String[1];
-		theatres[0] = "Cineplex";
-		return theatres;
+		ArrayList<String> theatreArray = dataControl.getTheatres();
+		return (String[]) theatreArray.toArray();
+	}
+	
+	private ArrayList<Showing> getShowings(String movieName, String theatreName){
+		return dataControl.getShowings(movieName, theatreName);
 	}
 	
 	private void displayTheatreOption() {
@@ -146,19 +141,28 @@ public class MoviePage extends JFrame{
         contentPane.setPreferredSize(new Dimension(300,300));
         contentPane.add("Center", scrollPane);
         selectShowingListener SListener = new selectShowingListener();
-        for (int j=0; j<100; j++) {
+        ArrayList<Showing> showings = getShowings((String)movieSelection.getSelectedItem(), (String)theatreSelection.getSelectedItem());
+        Iterator iterator = showings.iterator();
+        while (iterator.hasNext()) {
         	JPanel oneShowing = new JPanel();
         	oneShowing.setLayout(new BorderLayout());
     		oneShowing.setBackground(centerBackgroundColor);
     		oneShowing.setBorder(new EmptyBorder(10,10, 10,10 ));
-    		JLabel date = new JLabel("November 27, 2020");
+    		Showing show = (Showing) iterator.next();
+    		Date showDate = (Date) show.getTime();
+    		JLabel date = new JLabel(showDate.getMonth()+"/"+showDate.getDate+"/"+showDate.getYear());
     		date.setFont(labelFont);
     		oneShowing.add("North", date);
     		JPanel showingsForOneDate = new JPanel(new GridLayout(-1,2));
     		showingsForOneDate.setBackground(buttonColor);
-    		for (int i=3; i<8; i++) {
-    			JLabel timeLabel = new JLabel(date+" "+i+":00PM");
-    			JButton time = new JButton (i+":00PM");
+    		Date toCompare = showDate;
+    		while (toCompare.compareTo(showDate)==0) {
+    			String timeString = show.getTime().getHours()+":"+show.getTime().getMinutes();
+    			JLabel timeLabel = new JLabel(timeString);
+    			JButton time = new JButton (timeString);
+    			showings.remove(show);
+    			show = (Showing)iterator.next();
+    			toCompare = (Date)show.getTime();
     			timeLabel.setLabelFor(time);
     			time.addActionListener(SListener);
     			time.setFont(labelFont);

@@ -16,7 +16,7 @@ public class Homepage extends JFrame {
 	private JButton purchaseTicketButton= new JButton("Purchase Tickets");
 	private JButton loginButton = new JButton("Login");
 	private JButton registerButton = new JButton("Register");
-	private JPanel north = new JPanel();
+	private JPanel north;
 	private JPanel center = new JPanel();
 	private Font buttonFont = new Font("Verdana", Font.BOLD, 18);
 	private Color buttonColor = new Color(237,246,249);
@@ -32,15 +32,7 @@ public class Homepage extends JFrame {
 		
 		
 		//sets background, font and font colour of title
-		north.setLayout(new BoxLayout(north, BoxLayout.Y_AXIS));
-		north.setBackground(new Color(0,109,119));
-		north.setForeground(Color.white);
-		Font titleFont= new Font("Verdana", Font.BOLD, 24);
-		title.setFont(titleFont);
-		title.setForeground(Color.white);
-		north.add(title);
-		setRegisteredUserName();
-		add("North",north);
+		displayNorthPanel();
 
 		
 		//button related operations
@@ -60,6 +52,23 @@ public class Homepage extends JFrame {
 		registerButton.setBackground(buttonColor);
 		buttonLayout.add(registerButton);
 		add("Center", buttonLayout);
+		
+	}
+	
+	private void displayNorthPanel() {
+		if (north!=null) {
+			remove(north);
+		}
+		north = new JPanel();
+		north.setLayout(new BoxLayout(north, BoxLayout.Y_AXIS));
+		north.setBackground(new Color(0,109,119));
+		north.setForeground(Color.white);
+		Font titleFont= new Font("Verdana", Font.BOLD, 24);
+		title.setFont(titleFont);
+		title.setForeground(Color.white);
+		north.add(title);
+		setRegisteredUserName();
+		add("North",north);
 		
 	}
 	
@@ -89,6 +98,12 @@ public class Homepage extends JFrame {
 	
 	public void addRegisterListener(ActionListener listener) {
 		registerButton.addActionListener(listener);
+	}
+	
+	public void setUsername(String username) {
+		this.userName = username;
+		registeredUser=true;
+		displayNorthPanel();
 	}
 	
 	

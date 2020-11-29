@@ -2,6 +2,9 @@ package User_interface;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
+
+import Data_control.DataController;
 
 public class UIManager {
 	private Homepage homepage;
@@ -9,14 +12,21 @@ public class UIManager {
 	private RegisterForm registerpage;
 	private LoginPage loginpage;
 	private MoviePage moviepage;
+	private static UIManager singleInstance;
 	
-	public UIManager() {
+	private UIManager() {
 		homepage = new Homepage();
 		cancelpage= new CancellationPage();
 		registerpage = new RegisterForm();
 		loginpage = new LoginPage();
 	}
 	
+	public static UIManager getUIManager() {
+		if (singleInstance==null) {
+			singleInstance= new UIManager();
+		}
+		return singleInstance;
+	}
 	public void openHomepage() {
 		homepage.setVisible(true);
 		addListenersToHome();
@@ -90,6 +100,10 @@ public class UIManager {
 	
 	public void addListenersToCancel() {
 		cancelpage.addBackListener(new navigateCancelToHome());
+	}
+	
+	public void setUsername(String username) {
+		homepage.setUsername(username);
 	}
 	public class navigateHomeToCancel implements ActionListener{
 		@Override
@@ -173,7 +187,7 @@ public class UIManager {
 	
 
 	public static void main(String[] args) {
-		UIManager uiManager = new UIManager();
+		UIManager uiManager = UIManager.getUIManager();
 		uiManager.openHomepage();
 	}
 }
