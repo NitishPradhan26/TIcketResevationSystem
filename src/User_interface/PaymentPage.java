@@ -22,6 +22,8 @@ public class PaymentPage extends JFrame{
 	private JLabel bankInfo = new JLabel("Banking Information");
 	private JLabel creditCard = new JLabel("Credit Card:");
 	private JTextField creditCardInput = new JTextField(15);
+	private JLabel creditCardHolder = new JLabel("Name:");
+	private JTextField creditCardHolderInput = new JTextField(15);
 	private JLabel expiryDate = new JLabel("Expiry:");
 	private JTextField expiryDateInput = new JTextField(15);
 	private JLabel cvv = new JLabel("CVV");
@@ -37,7 +39,7 @@ public class PaymentPage extends JFrame{
 	public PaymentPage() {
 		super("Payment Page");
 		setTitle("Payment");
-		setSize(new Dimension(400,300));
+		setSize(new Dimension(400,320));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
@@ -67,39 +69,49 @@ public class PaymentPage extends JFrame{
 		contentLayout.putConstraint(SpringLayout.NORTH, creditCard, 40, SpringLayout.NORTH, this);
 		contentLayout.putConstraint(SpringLayout.WEST, creditCardInput, 15, SpringLayout.EAST, creditCard);
 		contentLayout.putConstraint(SpringLayout.NORTH, creditCardInput, 40, SpringLayout.NORTH, this);
+		creditCardHolder.setFont(labelFont);
+		creditCardHolder.setLabelFor(creditCardHolderInput);
+		creditCardHolderInput.setFont(fieldFont);
+		//sets constraints for location of expiry date label and its field 
+		contentLayout.putConstraint(SpringLayout.WEST, creditCardHolder, 7, SpringLayout.WEST, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, creditCardHolder, 70, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.WEST, creditCardHolderInput, 15, SpringLayout.EAST, creditCard);
+		contentLayout.putConstraint(SpringLayout.NORTH, creditCardHolderInput, 70, SpringLayout.NORTH, this);
 		expiryDate.setFont(labelFont);
 		expiryDate.setLabelFor(expiryDateInput);
 		expiryDateInput.setFont(fieldFont);
 		//sets constraints for location of expiry date label and its field 
 		contentLayout.putConstraint(SpringLayout.WEST, expiryDate, 7, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, expiryDate, 70, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, expiryDate, 100, SpringLayout.NORTH, this);
 		contentLayout.putConstraint(SpringLayout.WEST, expiryDateInput, 15, SpringLayout.EAST, creditCard);
-		contentLayout.putConstraint(SpringLayout.NORTH, expiryDateInput, 70, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, expiryDateInput, 100, SpringLayout.NORTH, this);
 		cvv.setFont(labelFont);
 		cvv.setLabelFor(cvvInput);
 		cvvInput.setFont(fieldFont);
 		contentLayout.putConstraint(SpringLayout.WEST, cvv, 7, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, cvv, 100, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, cvv, 130, SpringLayout.NORTH, this);
 		contentLayout.putConstraint(SpringLayout.WEST, cvvInput, 15, SpringLayout.EAST, creditCard);
-		contentLayout.putConstraint(SpringLayout.NORTH, cvvInput, 100, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, cvvInput, 130, SpringLayout.NORTH, this);
 		
 		DecimalFormat df = new DecimalFormat("##.##");
 		balance = new JLabel("Balance: $"+df.format(balanceDue));
 		balance.setFont(labelFont);
 		contentLayout.putConstraint(SpringLayout.WEST, balance, 7, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, balance, 130, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, balance, 160, SpringLayout.NORTH, this);
 		pay.setFont(labelFont);
 		pay.setBackground(buttonColor);
 		contentLayout.putConstraint(SpringLayout.WEST, pay, 70, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, pay, 160, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, pay, 190, SpringLayout.NORTH, this);
 		cancel.setFont(labelFont);
 		cancel.setBackground(buttonColor);
 		cancel.addActionListener(new cancelPaymentListener());
 		contentLayout.putConstraint(SpringLayout.WEST, cancel, 210, SpringLayout.WEST, this);
-		contentLayout.putConstraint(SpringLayout.NORTH, cancel, 160, SpringLayout.NORTH, this);
+		contentLayout.putConstraint(SpringLayout.NORTH, cancel, 190, SpringLayout.NORTH, this);
 		center.add(bankInfo);
 		center.add(creditCard);
 		center.add(creditCardInput);
+		center.add(creditCardHolder);
+		center.add(creditCardHolderInput);
 		center.add(expiryDate);
 		center.add(expiryDateInput);
 		center.add(cvv);

@@ -26,8 +26,7 @@ public class MyDate {
     }
 
     public boolean compareDates(MyDate anotherDate){
-        if(year == anotherDate.getYear() && month == anotherDate.getMonth() && day == anotherDate.getDay()
-                && hour == anotherDate.getHour() && minute == anotherDate.getMinute()){
+        if(year == anotherDate.getYear() && month == anotherDate.getMonth() && day == anotherDate.getDay()){
             return true;
         }
         else{
