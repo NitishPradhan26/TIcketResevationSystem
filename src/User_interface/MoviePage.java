@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import Data_control.DataController;
+import Theatre_elements.MyDate;
 import Theatre_elements.Showing;
 
 import java.awt.*;
@@ -151,15 +152,15 @@ public class MoviePage extends JFrame{
     		oneShowing.setBackground(centerBackgroundColor);
     		oneShowing.setBorder(new EmptyBorder(10,10, 10,10 ));
     		Showing show = (Showing) iterator.next();
-    		Date showDate = show.getTime();
-    		JLabel date = new JLabel(showDate.getMonth()+"/"+showDate.getDate()+"/"+showDate.getYear());
+    		MyDate showDate = show.getTime();
+    		JLabel date = new JLabel(showDate.getMonth()+"/"+showDate.getDay()+"/"+showDate.getYear());
     		date.setFont(labelFont);
     		oneShowing.add("North", date);
     		JPanel showingsForOneDate = new JPanel(new GridLayout(-1,2));
     		showingsForOneDate.setBackground(buttonColor);
-    		Date toCompare = showDate;
-    		while (toCompare.compareTo(showDate)==0) {
-    			String timeString = show.getTime().getHours()+":"+show.getTime().getMinutes();
+    		MyDate toCompare = showDate;
+    		while (toCompare.compareDates(showDate)) {
+    			String timeString = show.getTime().getHour()+":"+show.getTime().getMinute();
     			JLabel timeLabel = new JLabel(timeString);
     			JButton time = new JButton (timeString);
     			showings.remove(show);
