@@ -5,7 +5,7 @@ import Theatre_elements.Seat;
 import Theatre_elements.Showing;
 import Theatre_elements.Theatre;
 import Transaction_elements.Ticket;
-import User.User;
+import User.*;
 
 import java.util.ArrayList;
 
@@ -67,7 +67,7 @@ public class DataController {
         return null;
     }
 
-    public void registerUser(String name, String username, String password, String email) {
+    public void registerUser(String name, String username, String password, String email, String creditCardNo, String ccExpiry, int ccCVV, String address) {
         int accountNo;
         User user = null;
         do {
@@ -79,7 +79,7 @@ public class DataController {
                 }
             }
         } while (user != null);
-        users.add(new User(name, username, password, email, accountNo, 0f));
+        users.add(new Registered_user(name, username, password, email, accountNo, 0f, creditCardNo, ccExpiry, ccCVV, address));
     }
 
     public static DataController dataController(){
@@ -93,7 +93,7 @@ public class DataController {
         dataController().getMovies(); //get all movies as arraylist
         dataController().getTheatres(); //get all theatres as arraylist
         ArrayList<Showing> s = dataController().getShowings("Kung Fu Hustle", "Theatre"); //get all showings for given movie and theatre
-        dataController().registerUser("Bob", "benis@benis.com", "eee", "benis@benis.com"); //register new user
+        dataController().registerUser("Bob", "benis@benis.com", "eee", "benis@benis.com", "877987987", "tomorrow", 100, "somewhere"); //register new user
         User u = dataController().loginUser("bigsina", "assignmentiseasy"); //login a user
         dataController().loginUser("uwu", "uwu"); //fail login
         dataController().ticketManager.purchaseSeat(u, s.get(0), "A", 2); //purchase ticket

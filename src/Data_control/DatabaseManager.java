@@ -60,7 +60,7 @@ public class DatabaseManager {
                 if(userSet.getInt(9) == 1){
                     users.add(new Registered_user(userSet.getString(1), userSet.getString(2),
                             userSet.getString(3), userSet.getString(4), userSet.getInt(5),
-                            userSet.getFloat(6), userSet.getString(7), userSet.getString(8)));
+                            userSet.getFloat(6), userSet.getString(7), "", 0, userSet.getString(8)));
                 }
                 else if (userSet.getInt(10) == 1){
                     users.add(new Administrator(userSet.getString(1), userSet.getString(2),
