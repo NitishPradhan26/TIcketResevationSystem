@@ -2,6 +2,7 @@ package User_interface;
 
 import javax.swing.*;
 
+import Data_control.DataController;
 import Data_control.TicketManagement;
 
 import java.awt.*;
@@ -20,7 +21,7 @@ public class CancellationPage extends JFrame{
 	private Font labelFont = new Font("Verdana", Font.BOLD, 18);
 	private Font fieldFont = new Font("Verdana", Font.PLAIN, 16);
 	private Color buttonColor = new Color(237,246,249);
-	private TicketManagement ticketManager = new TicketManagement();
+	private TicketManagement ticketManager = DataController.dataController().ticketManager;
 	
 	
 	public CancellationPage() {

@@ -12,8 +12,8 @@ public class TicketManagement {
 
     private DataController dc;
 
-    public TicketManagement(){
-        this.dc = DataController.dataController();
+    public TicketManagement(DataController dc){
+        this.dc = dc;
     }
 
     public void purchaseSeat(User user, Showing showing, String row, int col){

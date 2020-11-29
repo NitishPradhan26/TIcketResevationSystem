@@ -115,7 +115,7 @@ public class DatabaseManager {
                 String showingTime = showingSet.getString(3);
                 DateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy h:mma");
                 java.util.Date date = dateFormat.parse(showingTime);
-                Showing showing = new Showing(findMovie(movieName), findTheatre(theatreName), date);
+                Showing showing = new Showing(findMovie(movieName), findTheatre(theatreName), new MyDate(date));
                 SeatingPlan plan = new SeatingPlan(loadSeats(movieName, theatreName, showingTime, showing));
                 showing.setPlan(plan);
                 showings.add(showing);
@@ -146,7 +146,7 @@ public class DatabaseManager {
         ResultSet set = queryDB("SELECT UserAccnt, Price, Cancelled FROM ticket WHERE TicketNo='" + ticketNo + "'");
         try{
             set.next();
-            Ticket ticket = new Ticket(ticketNo, seat, findUser(set.getInt(1)), showing, set.getFloat(2), set.getBoolean(3));
+            Ticket ticket = new Ticket(ticketNo, seat, findUser(set.getInt(1)), showing, set.getFloat(2), set.getBoolean(3), null);
             tickets.add(ticket);
             return ticket;
         } catch (SQLException e){

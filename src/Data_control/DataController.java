@@ -22,13 +22,13 @@ public class DataController {
     private static DataController dataController;
 
     private DataController(){
-//        dbM = new DatabaseManager("localhost\\SQLEXPRESS02:60490");
-//        ticketList = new TicketList(dbM.tickets);
-//        users = dbM.users;
-//        movieCatalogue = new MovieCatalogue(dbM.movies);
-//        theatreCatalogue = new TheatreCatalogue(dbM.theatres);
-//        ticketManager = new TicketManagement(this);
-//        showings = dbM.showings;
+        dbM = new DatabaseManager("localhost\\SQLEXPRESS02:60490");
+        ticketList = new TicketList(dbM.tickets);
+        users = dbM.users;
+        movieCatalogue = new MovieCatalogue(dbM.movies);
+        theatreCatalogue = new TheatreCatalogue(dbM.theatres);
+        ticketManager = new TicketManagement(this);
+        showings = dbM.showings;
     }
 
     public ArrayList<String> getMovies(){
@@ -71,13 +71,14 @@ public class DataController {
         int accountNo;
         User user = null;
         do {
+            user = null;
             accountNo = (int) (Math.random() * 10000d);
             for (User u : users) {
                 if (u.getAccountNum() == accountNo) {
                     user = u;
                 }
             }
-        } while (user == null);
+        } while (user != null);
         users.add(new User(name, username, password, email, accountNo, 0f));
     }
 

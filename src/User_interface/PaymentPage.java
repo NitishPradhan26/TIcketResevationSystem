@@ -42,7 +42,7 @@ public class PaymentPage extends JFrame{
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
 		dataControl = DataController.dataController();
-		ticketManager = new TicketManagement();
+		ticketManager = DataController.dataController().ticketManager;
 		
 		//sets title
 		north.setBackground(new Color(0,109,119));
