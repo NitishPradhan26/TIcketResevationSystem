@@ -4,17 +4,17 @@ import java.util.Date;
 
 public class Showing {
     private Movie movie;
-    private Date time;
+    private MyDate time;
     private SeatingPlan plan;
     private Theatre theatre;
 
     /*
-     * Constructor when given movie and theatre
+     * Constructor when given all necessary objects.
      */
-    public Showing(Movie movie, Theatre theatre, Date date){
+    public Showing(Movie movie, MyDate date, SeatingPlan plan, Theatre theatre){
         this.movie = movie;
         this.time = date;
-        this.plan = null;
+        this.plan = plan;
         this.theatre = theatre;
     }
 
@@ -23,7 +23,7 @@ public class Showing {
      */
     public Showing(Movie movie, int year, int month, int day, int hour, int minute, SeatingPlan plan, Theatre theatre){
         this.movie = movie;
-        this.time = new Date(year, month, day, hour, minute);
+        this.time = new MyDate(year, month, day, hour, minute);
         this.plan = plan;
         this.theatre = theatre;
     }
@@ -31,7 +31,7 @@ public class Showing {
     /*
         Ctor given a movie name
      */
-    public Showing(String movieName, Date date, SeatingPlan plan, Theatre theatre){
+    public Showing(String movieName, MyDate date, SeatingPlan plan, Theatre theatre){
         this.movie = new Movie(movieName);
         this.time = date;
         this.plan = plan;
@@ -46,11 +46,11 @@ public class Showing {
         this.movie = movie;
     }
 
-    public Date getTime() {
+    public MyDate getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(MyDate time) {
         this.time = time;
     }
 
