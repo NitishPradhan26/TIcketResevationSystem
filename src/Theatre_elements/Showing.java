@@ -38,6 +38,12 @@ public class Showing {
         this.theatre = theatre;
     }
 
+    public Showing(Movie movie, Theatre theatre, MyDate date){
+        this.movie = movie;
+        this.theatre = theatre;
+        this.time = date;
+    }
+
     public Movie getMovie() {
         return movie;
     }

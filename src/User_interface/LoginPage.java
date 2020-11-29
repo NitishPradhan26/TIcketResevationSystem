@@ -109,7 +109,7 @@ public class LoginPage extends JFrame{
 	
 	public String getPassword() {
 		char [] passwordArray = passwordInput.getPassword();
-		return passwordArray.toString();
+		return new String(passwordArray);
 	}
 	
 	public class loginButtonListener implements ActionListener{

@@ -9,7 +9,7 @@ import Theatre_elements.Showing;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -86,12 +86,14 @@ public class MoviePage extends JFrame{
 	
 	private String[] getMovies() {
 		ArrayList<String> movieArray = dataControl.getMovies();
-		return (String[]) movieArray.toArray();
+		String[] strings = new String[movieArray.size()];
+		return movieArray.toArray(strings);
 	}
 	
 	private String[] getTheatres() {
 		ArrayList<String> theatreArray = dataControl.getTheatres();
-		return (String[]) theatreArray.toArray();
+		String[] strings = new String[theatreArray.size()];
+		return theatreArray.toArray(strings);
 	}
 	
 	private ArrayList<Showing> getShowings(String movieName, String theatreName){
@@ -149,8 +151,8 @@ public class MoviePage extends JFrame{
     		oneShowing.setBackground(centerBackgroundColor);
     		oneShowing.setBorder(new EmptyBorder(10,10, 10,10 ));
     		Showing show = (Showing) iterator.next();
-    		Date showDate = (Date) show.getTime();
-    		JLabel date = new JLabel(showDate.getMonth()+"/"+showDate.getDate+"/"+showDate.getYear());
+    		Date showDate = show.getTime();
+    		JLabel date = new JLabel(showDate.getMonth()+"/"+showDate.getDate()+"/"+showDate.getYear());
     		date.setFont(labelFont);
     		oneShowing.add("North", date);
     		JPanel showingsForOneDate = new JPanel(new GridLayout(-1,2));
@@ -162,7 +164,7 @@ public class MoviePage extends JFrame{
     			JButton time = new JButton (timeString);
     			showings.remove(show);
     			show = (Showing)iterator.next();
-    			toCompare = (Date)show.getTime();
+    			toCompare = show.getTime();
     			timeLabel.setLabelFor(time);
     			time.addActionListener(SListener);
     			time.setFont(labelFont);
