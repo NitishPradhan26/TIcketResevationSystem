@@ -23,51 +23,39 @@ public class DataController {
     private static DataController dataController;
 
     private DataController(){
-//        dbM = new DatabaseManager("localhost\\SQLEXPRESS02:60490");
-//        ticketList = new TicketList(dbM.tickets);
-//        users = dbM.users;
-//        movieCatalogue = new MovieCatalogue(dbM.movies);
-//        theatreCatalogue = new TheatreCatalogue(dbM.theatres);
-//        ticketManager = new TicketManagement(this);
-//        showings = dbM.showings;
+        dbM = new DatabaseManager("localhost\\SQLEXPRESS02:60490");
+        ticketList = new TicketList(dbM.tickets);
+        users = dbM.users;
+        movieCatalogue = new MovieCatalogue(dbM.movies);
+        theatreCatalogue = new TheatreCatalogue(dbM.theatres);
+        ticketManager = new TicketManagement(this);
+        showings = dbM.showings;
     }
 
     public ArrayList<String> getMovies(){
-//        ArrayList<Movie> movieArray = movieCatalogue.getMovies();
+        ArrayList<Movie> movieArray = movieCatalogue.getMovies();
         ArrayList<String> movies = new ArrayList<String>();
-//        for (Movie m: movieArray) {
-//        	movies.add(m.getName());
-//        }
-        movies.add("Toy Story");
-        movies.add("Toy Story 2");
+        for (Movie m: movieArray) {
+        	movies.add(m.getName());
+        }
         return movies;
     }
     public ArrayList<String> getTheatres(){
-//        ArrayList<Theatre> theatreArray = theatreCatalogue.getTheatres();
+        ArrayList<Theatre> theatreArray = theatreCatalogue.getTheatres();
         ArrayList<String> theatres = new ArrayList<String>();
-//        for (Theatre t: theatreArray) {
-//        	theatres.add(t.getName());
-//        }
-        theatres.add("Cineplex");
+        for (Theatre t: theatreArray) {
+        	theatres.add(t.getName());
+        }
         return theatres;
     }
 
     public ArrayList<Showing> getShowings(String movieName, String theatreName) {
         ArrayList<Showing> goodShowings = new ArrayList<>();
-//        for (Showing s : showings) {
-//            if (s.getMovie().getName().equals(movieName) && s.getTheatre().getName().equals(theatreName)) {
-//                goodShowings.add(s);
-//            }
-//        }
-        goodShowings.add(new Showing(new Movie("Toy Story", 120), new MyDate(2020, 11, 29, 3, 00), null, new Theatre("Cineplex", "1234 Address") ));
-        goodShowings.add(new Showing(new Movie("Toy Story", 120), new MyDate(2020, 11, 29, 4, 00), null, new Theatre("Cineplex", "1234 Address") ));
-        goodShowings.add(new Showing(new Movie("Toy Story", 120), new MyDate(2020, 11, 29, 5, 00), null, new Theatre("Cineplex", "1234 Address") ));
-        goodShowings.add(new Showing(new Movie("Toy Story", 120), new MyDate(2020, 11, 29, 6, 00), null, new Theatre("Cineplex", "1234 Address") ));
-        goodShowings.add(new Showing(new Movie("Toy Story", 120), new MyDate(2020, 11, 29, 7, 00), null, new Theatre("Cineplex", "1234 Address") ));
-        goodShowings.add(new Showing(new Movie("Toy Story", 120), new MyDate(2020, 11, 30, 3, 00), null, new Theatre("Cineplex", "1234 Address") ));
-        goodShowings.add(new Showing(new Movie("Toy Story", 120), new MyDate(2020, 11, 30, 4, 00), null, new Theatre("Cineplex", "1234 Address") ));
-        goodShowings.add(new Showing(new Movie("Toy Story", 120), new MyDate(2020, 11, 31, 3, 00), null, new Theatre("Cineplex", "1234 Address") ));
-        goodShowings.add(new Showing(new Movie("Toy Story", 120), new MyDate(2020, 12, 01, 4, 00), null, new Theatre("Cineplex", "1234 Address") ));
+        for (Showing s : showings) {
+            if (s.getMovie().getName().equals(movieName) && s.getTheatre().getName().equals(theatreName)) {
+                goodShowings.add(s);
+            }
+        }
         return goodShowings;
     }
     

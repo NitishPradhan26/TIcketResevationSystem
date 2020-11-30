@@ -7,11 +7,11 @@ import java.util.Date;
 import Data_control.DataController;
 
 public class UIManager {
-	private Homepage homepage;
-	private CancellationPage cancelpage;
-	private RegisterForm registerpage;
-	private LoginPage loginpage;
-	private MoviePage moviepage;
+	private static Homepage homepage;
+	private static CancellationPage cancelpage;
+	private static RegisterForm registerpage;
+	private static LoginPage loginpage;
+	private static MoviePage moviepage;
 	private static UIManager singleInstance;
 	
 	private UIManager() {
@@ -67,7 +67,13 @@ public class UIManager {
 	}
 	
 	public void openMoviePage() {
-		moviepage = new MoviePage();
+		if (moviepage==null) {
+			moviepage = new MoviePage();
+		}
+		else {
+			closeMoviePage();
+			moviepage = new MoviePage();
+		}
 		moviepage.setVisible(true);
 		addListenersToPurchase();
 	}
