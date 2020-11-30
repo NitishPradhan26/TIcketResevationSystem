@@ -172,15 +172,9 @@ public class SeatSelection extends JFrame{
 						close();
 					}
 					else {
-						HashMap<Integer, Character> rowMapping = new HashMap<Integer, Character>();
-						char j='A';
-						for (int i=0; i<5; i++) {
-							rowMapping.put(i, j);
-							j++;
-						}
 						for (Integer s: userSelectedSeats) {
-							int first_index = s/10;
-							int second_index = s%10;
+							int first_index = s/10-1;
+							int second_index = s%10-1;
 							tm.purchaseSeat(u, show, first_index, second_index, ((Registered_user) u).getCreditCard());
 						}
 						JOptionPane.showMessageDialog(getParent(), "Purchase successful!");

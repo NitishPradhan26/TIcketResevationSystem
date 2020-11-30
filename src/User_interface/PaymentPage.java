@@ -120,6 +120,7 @@ public class PaymentPage extends JFrame{
 		contentLayout.putConstraint(SpringLayout.NORTH, balance, 190, SpringLayout.NORTH, this);
 		pay.setFont(labelFont);
 		pay.setBackground(buttonColor);
+		pay.addActionListener(new paymentListener());
 		contentLayout.putConstraint(SpringLayout.WEST, pay, 70, SpringLayout.WEST, this);
 		contentLayout.putConstraint(SpringLayout.NORTH, pay, 210, SpringLayout.NORTH, this);
 		cancel.setFont(labelFont);
@@ -191,9 +192,5 @@ public class PaymentPage extends JFrame{
 		}
 		
 	}
-	
-//	public static void main(String[] args) {
-//		PaymentPage pay = new PaymentPage();
-//		pay.setVisible(true);
-//	}
+
 }
