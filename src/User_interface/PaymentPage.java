@@ -43,10 +43,10 @@ public class PaymentPage extends JFrame{
 	private JButton cancel = new JButton("Cancel");
 	private DataController dataControl;
 	private TicketManagement ticketManager;
-	private ArrayList<String> seats;
+	private ArrayList<Integer> seats;
 	private Showing show;
 	
-	public PaymentPage(Showing show, ArrayList<String> seats) {
+	public PaymentPage(Showing show, ArrayList<Integer> userSelectedSeats, float balance1) {
 		super("Payment Page");
 		setTitle("Payment");
 		setSize(new Dimension(400,320));
@@ -56,7 +56,8 @@ public class PaymentPage extends JFrame{
 		dataControl = DataController.dataController();
 		ticketManager = DataController.dataController().ticketManager;
 		this.show=show;
-		this.seats=seats;
+		this.seats=userSelectedSeats;
+		this.balanceDue=balance1;
 		
 		//sets title
 		north.setBackground(new Color(0,109,119));
@@ -177,21 +178,14 @@ public class PaymentPage extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			HashMap<Integer, Character> rowMapping = new HashMap<Integer, Character>();
-			char j='A';
-			for (int i=0; i<5; i++) {
-				rowMapping.put(i, j);
-				j++;
-			}
 			Random rand = new Random();
 			User u = new User(getName(), null, null, getEmail(), rand.nextInt(1000)+1000, 0 );
-			for (String s: seats) {
-				int seat = Integer.parseInt(s);
-				int first_index = seat/10;
-				int second_index = seat%10;
+			for (Integer s: seats) {
+				int first_index = s/10;
+				int second_index = s%10;
 
 				CreditCard card = new CreditCard(creditCardInput.getText(), creditCardHolderInput.getText(), expiryDateInput.getText(), Integer.parseInt(cvvInput.getText()));
-				ticketManager.purchaseSeat(u, show, rowMapping.get(first_index), second_index, card);
+				ticketManager.purchaseSeat(u, show, first_index-1, second_index-1, card);
 			}
 			JOptionPane.showMessageDialog(getParent(), "Purchase successful!");
 		}

@@ -20,6 +20,7 @@ public class SeatSelection extends JFrame{
 	private String showing;
 	private Showing show;
 	private SeatingPlan seats;
+	private int[][] seatArray;
 	private ArrayList<Integer> userSelectedSeats = new ArrayList<Integer>();
 	private JLabel title = new JLabel("Ticket Reservation System");
 	private JPanel north = new JPanel();
@@ -68,6 +69,7 @@ public class SeatSelection extends JFrame{
 		info.add(showingLabel);
 		center.add("North", info);
 		this.seats = seats;
+		seatArray = this.seats.getTakenSeats();
 		displaySeats();
 		center.add("Center", seatPanel);
 		selectSeatButton.setBackground(buttonColor);
@@ -130,16 +132,19 @@ public class SeatSelection extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			JButton tempButton = (JButton)e.getSource();
 			int seatNum = Integer.parseInt(tempButton.getText());
-			if (userSelectedSeats.contains(seatNum)) {
-				userSelectedSeats.remove(seatNum);
-				tempButton.setBackground(buttonColor);
+			int taken = seatArray[seatNum/10][seatNum%10];
+			if (taken==1) {
+				JOptionPane.showMessageDialog(getParent(), "Seat already taken. Please select another.");
 			}
-			else if (!seats.isTaken(seatNum/10, seatNum%10)) {
+			else if(taken==0) {
+				seatArray[seatNum/10][seatNum%10]=-1;
 				userSelectedSeats.add(seatNum);
 				tempButton.setBackground(selectedSeatColor);
 			}
 			else {
-				JOptionPane.showMessageDialog(getParent(), "Seat already taken. Please select another.");
+				seatArray[seatNum/10][seatNum%10]=0;
+				userSelectedSeats.remove(seatNum);
+				tempButton.setBackground(buttonColor);
 			}
 			
 		}
@@ -188,9 +193,8 @@ public class SeatSelection extends JFrame{
 						JOptionPane.showMessageDialog(getParent(), "Please navigate to the homepage and login using your name and password, and try again.");
 					}
 					else if (response==JOptionPane.NO_OPTION){
-//						PaymentPage payment = new PaymentPage(show, userSelectedSeats);
-//						payment.setBalanceDue(balance);
-//						payment.setVisible(true);
+						PaymentPage payment = new PaymentPage(show, userSelectedSeats, balance);
+						payment.setVisible(true);
 						close();
 					}
 				}
