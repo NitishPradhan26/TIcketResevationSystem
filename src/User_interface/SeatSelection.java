@@ -143,7 +143,7 @@ public class SeatSelection extends JFrame{
 			}
 			else {
 				seatArray[seatNum/10-1][seatNum%10-1]=0;
-				userSelectedSeats.remove(seatNum);
+				userSelectedSeats.remove(userSelectedSeats.indexOf(seatNum));
 				tempButton.setBackground(buttonColor);
 			}
 			
