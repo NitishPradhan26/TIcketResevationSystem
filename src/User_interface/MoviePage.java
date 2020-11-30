@@ -258,9 +258,9 @@ public class MoviePage extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			showingButton button = (showingButton)e.getSource();
-			seatSelection = new SeatSelection((String)movieSelection.getSelectedItem(), (String)button.getShowing().getTime().toString());
+			seatSelection = new SeatSelection((String)movieSelection.getSelectedItem(), (String)button.getShowing().getTime().toString(), button.getShowing().getPlan());
 			seatSelection.setShow(button.getShowing());
-			seatSelection.setSeats(button.getShowing().getPlan());
+			//seatSelection.setSeats(button.getShowing().getPlan());
 			seatSelection.addBackListener(new navigateSeatToMovie());
 			close();
 			seatSelection.setVisible(true);

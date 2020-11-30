@@ -104,9 +104,9 @@ public class DataController {
         dataController().getTheatres(); //get all theatres as arraylist
         ArrayList<Showing> s = dataController().getShowings("Kung Fu Hustle", "Theatre"); //get all showings for given movie and theatre
         dataController().registerUser("Bob", "benis@benis.com", "eee", "benis@benis.com", "877987987", "tomorrow", 100, "somewhere"); //register new user
-        User u = dataController().loginUser("bigsina", "assignmentiseasy"); //login a user
+        Registered_user u = (Registered_user)dataController().loginUser("twentyyears", "teaching"); //login a user
         dataController().loginUser("uwu", "uwu"); //fail login
-        dataController().ticketManager.purchaseSeat(u, s.get(0), "A", 2); //purchase ticket
+        dataController().ticketManager.purchaseSeat(u, s.get(0), 1, 2, u.getCreditCard()); //purchase ticket
         ArrayList<Ticket> t = dataController().ticketManager.getUserTickets(u.getAccountNum()); //get a users tickets
         dataController().ticketManager.cancelTicket(t.get(0).getTicketNo()); //cancel a ticket
     }

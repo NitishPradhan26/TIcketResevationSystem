@@ -132,7 +132,7 @@ public class DatabaseManager {
         ResultSet seatSet = queryDB("SELECT Row, Col, TicketNo FROM seat WHERE MovieName='" + movie + "' AND TheatreName='" + theatre + "' AND ShowTime='" + time + "'");
         try {
             while (seatSet.next()) {
-                Seat seat = new Seat(seatSet.getString(1), Integer.parseInt(seatSet.getString(2)));
+                Seat seat = new Seat(seatSet.getString(1).charAt(0) - 'A' + 1, Integer.parseInt(seatSet.getString(2)));
                 seat.setPurchaser(loadTicket(seatSet.getInt(3), seat, showing));
                 seats.add(seat);
             }

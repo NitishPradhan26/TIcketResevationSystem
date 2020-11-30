@@ -17,8 +17,8 @@ public class SeatingPlan {
             seats[s.getRow()-1][s.getSeatNo()-1] = s;
         }
         
-        for(int i = 0; i < 4; i++) {
-        	for(int j = 0; j < 4; j++) {
+        for(int i = 0; i < 5; i++) {
+        	for(int j = 0; j < 5; j++) {
         		if(seats[i][j] == null) {
         			seats[i][j] = new Seat(i,j);
         		}
@@ -42,12 +42,17 @@ public class SeatingPlan {
     }
 
     public boolean isTaken(int row, int seatNo) {
-    	if(seats[row][seatNo].isAvailable()) {
-    		return false;
-    	}
-    	else {
-    		return true;
-    	}
+        try {
+            if (seats[row][seatNo].isAvailable()) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        catch(NullPointerException e){
+            e.printStackTrace();
+        }
+        return false;
     }
     
     /*

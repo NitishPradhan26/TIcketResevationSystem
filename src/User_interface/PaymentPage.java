@@ -191,7 +191,7 @@ public class PaymentPage extends JFrame{
 				int second_index = seat%10;
 
 				CreditCard card = new CreditCard(creditCardInput.getText(), creditCardHolderInput.getText(), expiryDateInput.getText(), Integer.parseInt(cvvInput.getText()));
-				ticketManager.purchaseSeat(u, show, rowMapping.get(first_index).toString(), second_index, card);
+				ticketManager.purchaseSeat(u, show, rowMapping.get(first_index), second_index, card);
 			}
 			JOptionPane.showMessageDialog(getParent(), "Purchase successful!");
 		}

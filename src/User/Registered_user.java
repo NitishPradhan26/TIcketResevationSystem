@@ -4,8 +4,6 @@ import Transaction_elements.CreditCard;
 
 public class Registered_user extends User {
 
-
-
     private CreditCard creditCard;
     private String address;
 

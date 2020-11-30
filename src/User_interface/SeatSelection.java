@@ -35,7 +35,7 @@ public class SeatSelection extends JFrame{
 	private Color centerBackgroundColor = new Color(131,197,190);
 	private Color takenSeatColor = new Color(111, 171, 191);
 	
-	public SeatSelection(String movie, String showing) {
+	public SeatSelection(String movie, String showing, SeatingPlan seats) {
 		super("Seat Selection");
 		setTitle("Seat Selection");
 		setSize(new Dimension(400,600));
@@ -67,6 +67,7 @@ public class SeatSelection extends JFrame{
 		showingLabel.setFont(labelFont);
 		info.add(showingLabel);
 		center.add("North", info);
+		this.seats = seats;
 		displaySeats();
 		center.add("Center", seatPanel);
 		selectSeatButton.setBackground(buttonColor);
