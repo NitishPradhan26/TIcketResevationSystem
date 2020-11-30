@@ -3,24 +3,24 @@ package Theatre_elements;
 import Transaction_elements.Ticket;
 
 public class Seat {
-    private String row;
+    private int row;
     private int seatNo;
     private Ticket purchaser;
 
-    public Seat(String row, int seatNo, Ticket ticket) {
+    public Seat(int row, int seatNo, Ticket ticket) {
         purchaser = ticket;
         this.seatNo = seatNo;
         this.row = row;
     }
 
-    public Seat(String row, int seatNo) {
+    public Seat(int row, int seatNo) {
         purchaser = null;
         this.seatNo = seatNo;
         this.row = row;
     }
 
     public Seat() {
-        row = null;
+        row = 0;
         seatNo = 0;
         purchaser = null;
     }
@@ -47,11 +47,11 @@ public class Seat {
         purchaser = null;
     }
 
-    public String getRow() {
+    public int getRow() {
         return row;
     }
 
-    public void setRow(String row) {
+    public void setRow(int row) {
         this.row = row;
     }
 
@@ -73,6 +73,6 @@ public class Seat {
 
     @Override
     public String toString() {
-        return "|" + seatNo + "| ";
+        return "|" + row + seatNo + "| ";
     }
 }
