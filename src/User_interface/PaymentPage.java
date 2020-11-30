@@ -114,7 +114,7 @@ public class PaymentPage extends JFrame{
 		contentLayout.putConstraint(SpringLayout.NORTH, cvvInput, 160, SpringLayout.NORTH, this);
 		
 		DecimalFormat df = new DecimalFormat("##.##");
-		balance = new JLabel("Balance: $"+df.format(balanceDue));
+		balance = new JLabel("Total due: $"+df.format(balanceDue));
 		balance.setFont(labelFont);
 		contentLayout.putConstraint(SpringLayout.WEST, balance, 7, SpringLayout.WEST, this);
 		contentLayout.putConstraint(SpringLayout.NORTH, balance, 190, SpringLayout.NORTH, this);
@@ -181,14 +181,19 @@ public class PaymentPage extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			Random rand = new Random();
 			User u = new User(getName(), null, null, getEmail(), rand.nextInt(1000)+1000, 0 );
+			CreditCard card = new CreditCard(creditCardInput.getText(), creditCardHolderInput.getText(), expiryDateInput.getText(), Integer.parseInt(cvvInput.getText()));
 			for (Integer s: seats) {
 				int first_index = s/10;
 				int second_index = s%10;
 
-				CreditCard card = new CreditCard(creditCardInput.getText(), creditCardHolderInput.getText(), expiryDateInput.getText(), Integer.parseInt(cvvInput.getText()));
+				
 				ticketManager.purchaseSeat(u, show, first_index-1, second_index-1, card);
 			}
-			JOptionPane.showMessageDialog(getParent(), "Purchase successful!");
+			JOptionPane.showMessageDialog(getParent(), "Purchase successful! Your tickets and receipt have been sent to your email.");
+			System.out.println("Purchase successful. Tickets and receipt have been sent to user's email");
+			close();
+			UIManager.getUIManager().openHomepage();
+			
 		}
 		
 	}

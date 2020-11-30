@@ -86,6 +86,10 @@ public class UIManager {
 	public boolean registeredUser() {
 		return homepage.getRegisteredUser();
 	}
+	
+	public void setAdmin() {
+		homepage.setIsAdmin();
+	}
 	public void addListenersToHome(){
 		homepage.addCancelTicketListener(new navigateHomeToCancel());
 		homepage.addRegisterListener(new navigateHomeToRegister());

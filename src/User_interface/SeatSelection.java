@@ -8,6 +8,7 @@ import Theatre_elements.Seat;
 import Theatre_elements.SeatingPlan;
 import Theatre_elements.Showing;
 import User.*;
+import User_interface.UIManager;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -177,7 +178,11 @@ public class SeatSelection extends JFrame{
 							int second_index = s%10-1;
 							tm.purchaseSeat(u, show, first_index, second_index, ((Registered_user) u).getCreditCard());
 						}
-						JOptionPane.showMessageDialog(getParent(), "Purchase successful!");
+						JOptionPane.showMessageDialog(getParent(), "Purchase successful! Your tickets and receipt have been sent to your email.");
+						System.out.println("Purchase successful. Tickets and receipt have been sent to user's email");
+						close();
+						manager.openHomepage();
+						
 					}
 				}
 				else {

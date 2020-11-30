@@ -91,6 +91,10 @@ public class DataController {
         } while (user != null);
         users.add(new Registered_user(name, username, password, email, accountNo, 0f, creditCardNo, ccExpiry, ccCVV, address));
     }
+    
+    public void sendEmailToRegisteredUsers(String message) {
+    	System.out.println("Email sent to all registered users");
+    }
 
     public static DataController dataController(){
         if(dataController == null){

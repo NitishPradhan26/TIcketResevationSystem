@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Data_control.DataController;
+import User.Administrator;
+import User.User;
 
 public class LoginPage extends JFrame{
 	private JLabel title = new JLabel("Ticket Reservation System");
@@ -115,13 +117,19 @@ public class LoginPage extends JFrame{
 	public class loginButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (dataControl.loginUser(getUsername(), getPassword())==null){
+			User u = dataControl.loginUser(getUsername(), getPassword());
+			if (u==null){
 				JOptionPane.showMessageDialog(getParent(), "Username or password incorrect. Please try again.");
 			}
 			else {
 				UIManager instance = UIManager.getUIManager();
 				instance.closeLogin();
-				instance.setUsername(getUsername());
+				if (u instanceof Administrator) {
+					instance.setAdmin();
+				}
+				else {
+					instance.setUsername(getUsername());
+				}
 				instance.openHomepage();
 			}
 		}
