@@ -4,6 +4,8 @@ import javax.swing.border.EmptyBorder;
 
 import Data_control.DataController;
 import Data_control.TicketManagement;
+import Theatre_elements.Seat;
+import Theatre_elements.SeatingPlan;
 import Theatre_elements.Showing;
 import User.User;
 
@@ -17,8 +19,8 @@ public class SeatSelection extends JFrame{
 	private String movie;
 	private String showing;
 	private Showing show;
-	private int [][] seats = new int [5][5];
-	private ArrayList<String> userSelectedSeats = new ArrayList<String>();
+	private SeatingPlan seats;
+	private ArrayList<Integer> userSelectedSeats = new ArrayList<Integer>();
 	private JLabel title = new JLabel("Ticket Reservation System");
 	private JPanel north = new JPanel();
 	private JPanel center = new JPanel();
@@ -32,9 +34,6 @@ public class SeatSelection extends JFrame{
 	private Color selectedSeatColor = new Color(153, 218, 240);
 	private Color centerBackgroundColor = new Color(131,197,190);
 	private Color takenSeatColor = new Color(111, 171, 191);
-	private final int TAKEN_SEAT = 1;
-	private final int EMPTY_SEAT = 0;
-	private final int SELECTED_SEAT = -1;
 	
 	public SeatSelection(String movie, String showing) {
 		super("Seat Selection");
@@ -68,7 +67,6 @@ public class SeatSelection extends JFrame{
 		showingLabel.setFont(labelFont);
 		info.add(showingLabel);
 		center.add("North", info);
-		setSeatAvailability();
 		displaySeats();
 		center.add("Center", seatPanel);
 		selectSeatButton.setBackground(buttonColor);
@@ -94,7 +92,7 @@ public class SeatSelection extends JFrame{
 			for (int j=1; j<=5; j++) {
 				JButton seat = new JButton(Integer.toString(i)+Integer.toString(j));
 				seat.addActionListener(ssl);
-				if (seats[i-1][j-1]==TAKEN_SEAT) {
+				if (seats.isTaken(i-1,j-1)) {
 					seat.setBackground(takenSeatColor);
 				}
 				else {
@@ -107,21 +105,7 @@ public class SeatSelection extends JFrame{
 		
 	}
 	
-	
-	public void setSeatAvailability() {
-		//make request to database 
-		for (int i=0; i<5; i++) {
-			for (int j=0; j<5; j++) {
-				if (i==0) {
-					seats[i][j]=TAKEN_SEAT;
-				}
-				else {
-					seats[i][j]=EMPTY_SEAT;
-				}
-				
-			}
-		}
-	}
+
 	
 	public void addBackListener(ActionListener listener) {
 		backButton.addActionListener(listener);
@@ -136,22 +120,22 @@ public class SeatSelection extends JFrame{
 		this.show=show;
 	}
 	
+	public void setSeats(SeatingPlan seatPlan) {
+		this.seats=seatPlan;
+	}
+	
 	public class selectSeatListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JButton tempButton = (JButton)e.getSource();
 			int seatNum = Integer.parseInt(tempButton.getText());
-			int firstIndex = (seatNum/10)-1;
-			int secondIndex = (seatNum%10)-1;
-			if (seats[firstIndex][secondIndex]==SELECTED_SEAT) {
-				userSelectedSeats.remove(tempButton.getText());
+			if (userSelectedSeats.contains(seatNum))) {
+				userSelectedSeats.remove(seatNum);
 				tempButton.setBackground(buttonColor);
-				seats[firstIndex][secondIndex]=EMPTY_SEAT;
 			}
-			else if (seats[firstIndex][secondIndex]==EMPTY_SEAT) {
-				userSelectedSeats.add(tempButton.getText());
+			else if (!seats.isTaken(seatNum/10, seatNum%10)) {
+				userSelectedSeats.add(seatNum);
 				tempButton.setBackground(selectedSeatColor);
-				seats[firstIndex][secondIndex]=SELECTED_SEAT;
 			}
 			else {
 				JOptionPane.showMessageDialog(getParent(), "Seat already taken. Please select another.");
@@ -165,7 +149,7 @@ public class SeatSelection extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String message = "You have selected seats:";
-			for (String s: userSelectedSeats) {
+			for (Integer s: userSelectedSeats) {
 				message+= " "+s;
 			}
 			message+=". Please confirm your seat selection.";
@@ -188,11 +172,10 @@ public class SeatSelection extends JFrame{
 							rowMapping.put(i, j);
 							j++;
 						}
-						for (String s: userSelectedSeats) {
-							int seat = Integer.parseInt(s);
-							int first_index = seat/10;
-							int second_index = seat%10;
-							tm.purchaseSeat(u, show, rowMapping.get(first_index).toString(), second_index);
+						for (Integer s: userSelectedSeats) {
+							int first_index = s/10;
+							int second_index = s%10;
+//							tm.purchaseSeat(u, show, first_index, second_index);
 						}
 						JOptionPane.showMessageDialog(getParent(), "Purchase successful!");
 					}
@@ -204,9 +187,9 @@ public class SeatSelection extends JFrame{
 						JOptionPane.showMessageDialog(getParent(), "Please navigate to the homepage and login using your name and password, and try again.");
 					}
 					else if (response==JOptionPane.NO_OPTION){
-						PaymentPage payment = new PaymentPage(show, userSelectedSeats);
-						payment.setBalanceDue(balance);
-						payment.setVisible(true);
+//						PaymentPage payment = new PaymentPage(show, userSelectedSeats);
+//						payment.setBalanceDue(balance);
+//						payment.setVisible(true);
 						close();
 					}
 				}

@@ -260,6 +260,7 @@ public class MoviePage extends JFrame{
 			showingButton button = (showingButton)e.getSource();
 			seatSelection = new SeatSelection((String)movieSelection.getSelectedItem(), (String)button.getShowing().getTime().toString());
 			seatSelection.setShow(button.getShowing());
+			seatSelection.setSeats(button.getShowing().getPlan());
 			seatSelection.addBackListener(new navigateSeatToMovie());
 			close();
 			seatSelection.setVisible(true);
