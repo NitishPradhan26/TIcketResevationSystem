@@ -9,7 +9,7 @@ public class Payment {
     private CreditCard creditCard;
     private Financial_Institution bank;
     private Timestamp timeStamp;
-    private float ammount;
+
 
 
 
@@ -17,14 +17,14 @@ public class Payment {
         this.creditCard = null;
         this.bank = null;
         this.timeStamp = new Timestamp(System.currentTimeMillis());
-        this.ammount = 0;
+
 
     }
-    public Payment(CreditCard CreditCard,Financial_Institution Bank, float Ammount){
+    public Payment(CreditCard CreditCard,Financial_Institution Bank){
         this.creditCard = CreditCard;
         this.bank = Bank;
         this.timeStamp = new Timestamp(System.currentTimeMillis());
-        this.ammount = Ammount;
+
 
     }
 

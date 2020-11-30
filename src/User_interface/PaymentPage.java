@@ -5,6 +5,7 @@ import javax.swing.*;
 import Data_control.DataController;
 import Data_control.TicketManagement;
 import Theatre_elements.Showing;
+import Transaction_elements.CreditCard;
 import User.User;
 
 import java.awt.*;
@@ -188,7 +189,9 @@ public class PaymentPage extends JFrame{
 				int seat = Integer.parseInt(s);
 				int first_index = seat/10;
 				int second_index = seat%10;
-				ticketManager.purchaseSeat(u, show, rowMapping.get(first_index).toString(), second_index);
+
+				CreditCard card = new CreditCard(creditCardInput.getText(), creditCardHolderInput.getText(), expiryDateInput.getText(), Integer.parseInt(cvvInput.getText()));
+				ticketManager.purchaseSeat(u, show, rowMapping.get(first_index).toString(), second_index, card);
 			}
 			JOptionPane.showMessageDialog(getParent(), "Purchase successful!");
 		}

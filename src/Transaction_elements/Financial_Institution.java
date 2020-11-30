@@ -2,14 +2,18 @@ package Transaction_elements;
 
 public class Financial_Institution {
 
+    private static Financial_Institution instance = new Financial_Institution();
+    private String name = "World Bank";
 
-    private String name;
 
+    private Financial_Institution(){}
 
-    public Financial_Institution(String Name){
+    public static Financial_Institution getInstance(){
 
-        this.name = Name;
+        return instance;
     }
+
+
 
 
     void processPayment(Payment process){

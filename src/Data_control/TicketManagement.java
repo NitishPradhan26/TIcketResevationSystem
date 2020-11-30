@@ -2,6 +2,8 @@ package Data_control;
 
 import Theatre_elements.Seat;
 import Theatre_elements.Showing;
+import Transaction_elements.CreditCard;
+import Transaction_elements.Financial_Institution;
 import Transaction_elements.Payment;
 import Transaction_elements.Ticket;
 import User.*;
@@ -16,8 +18,8 @@ public class TicketManagement {
         this.dc = dc;
     }
 
-    public void purchaseSeat(User user, Showing showing, String row, int col){
-       // This function also needs to have a credit card object as an argument
+    public void purchaseSeat(User user, Showing showing, int row, int col, CreditCard card){
+        // This function also needs to have a credit card object as an argument
 
         Seat seat = new Seat(row, col);
         showing.getPlan().purchaseSeat(seat);
@@ -25,11 +27,17 @@ public class TicketManagement {
         do{
             ticketNo = (int)(Math.random() * 10000d);
         } while(dc.ticketList.getTicket(ticketNo) != null);
+        // Calling the instance of Financial_institution that all users use
+        Financial_Institution universalBank = Financial_Institution.getInstance();
 
-        Payment payment = new Payment(); // Need to add argument (CreditCard CreditCard,Financial_Institution Bank, float Ammount)
+        Payment payment = new Payment(card, universalBank);
+
         Ticket ticket = new Ticket(ticketNo, seat, user, showing, 7.99f, false, payment);
+        // Applying the process for the completion of the payment
+        payment.completePayment(ticket);
         seat.setPurchaser(ticket);
         dc.ticketList.addTicket(ticket);
+
     }
 
     public ArrayList<Ticket> getUserTickets(int userNum){

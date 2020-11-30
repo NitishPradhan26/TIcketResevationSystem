@@ -7,7 +7,7 @@ import Data_control.TicketManagement;
 import Theatre_elements.Seat;
 import Theatre_elements.SeatingPlan;
 import Theatre_elements.Showing;
-import User.User;
+import User.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -129,7 +129,7 @@ public class SeatSelection extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			JButton tempButton = (JButton)e.getSource();
 			int seatNum = Integer.parseInt(tempButton.getText());
-			if (userSelectedSeats.contains(seatNum))) {
+			if (userSelectedSeats.contains(seatNum)) {
 				userSelectedSeats.remove(seatNum);
 				tempButton.setBackground(buttonColor);
 			}
@@ -175,7 +175,7 @@ public class SeatSelection extends JFrame{
 						for (Integer s: userSelectedSeats) {
 							int first_index = s/10;
 							int second_index = s%10;
-//							tm.purchaseSeat(u, show, first_index, second_index);
+							tm.purchaseSeat(u, show, first_index, second_index, ((Registered_user) u).getCreditCard());
 						}
 						JOptionPane.showMessageDialog(getParent(), "Purchase successful!");
 					}

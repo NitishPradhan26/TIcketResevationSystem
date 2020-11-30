@@ -4,6 +4,8 @@ import Transaction_elements.CreditCard;
 
 public class Registered_user extends User {
 
+
+
     private CreditCard creditCard;
     private String address;
 
@@ -11,5 +13,10 @@ public class Registered_user extends User {
         super(name, username, password, email, accountNum, credit);
         this.creditCard = new CreditCard(creditCardNo, name, ccExpiry, ccCVV);
         this.address = address;
+    }
+
+
+    public CreditCard getCreditCard() {
+        return creditCard;
     }
 }
