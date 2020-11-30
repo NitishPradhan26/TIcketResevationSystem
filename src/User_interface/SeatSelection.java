@@ -132,17 +132,17 @@ public class SeatSelection extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			JButton tempButton = (JButton)e.getSource();
 			int seatNum = Integer.parseInt(tempButton.getText());
-			int taken = seatArray[seatNum/10][seatNum%10];
+			int taken = seatArray[seatNum/10-1][seatNum%10-1];
 			if (taken==1) {
 				JOptionPane.showMessageDialog(getParent(), "Seat already taken. Please select another.");
 			}
 			else if(taken==0) {
-				seatArray[seatNum/10][seatNum%10]=-1;
+				seatArray[seatNum/10-1][seatNum%10-1]=-1;
 				userSelectedSeats.add(seatNum);
 				tempButton.setBackground(selectedSeatColor);
 			}
 			else {
-				seatArray[seatNum/10][seatNum%10]=0;
+				seatArray[seatNum/10-1][seatNum%10-1]=0;
 				userSelectedSeats.remove(seatNum);
 				tempButton.setBackground(buttonColor);
 			}
