@@ -5,49 +5,67 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SeatingPlan {
-    private HashMap<String, Seat> seats;
+    private Seat[][] seats;
 
-    /*
-     Copies an existing map of seats
-     */
-    public SeatingPlan(HashMap<String, Seat> seats){
-        this.seats = seats;
-    }
-
+ 
     /*
      Given a List of currently taken seats, fill the seat map
      */
     public SeatingPlan(ArrayList<Seat> takenSeats){
-        seats = new HashMap<>();
-        for (Seat s : takenSeats) {
-            String key = s.getRow() + s.getSeatNo();
-            seats.put(key, s);
+        seats = new Seat[5][5];
+        for (Seat s : takenSeats){
+            seats[s.getRow()-1][s.getSeatNo()-1] = s;
         }
+        
+        for(int i = 0; i < 4; i++) {
+        	for(int j = 0; j < 4; j++) {
+        		if(seats[i][j] == null) {
+        			seats[i][j] = new Seat(i,j);
+        		}
+        	}
+        }
+      
     }
 
     /*
      Purchases seat based off given Seat, in format rowNumber (i.e, "A4");
      */
     public void purchaseSeat(Seat toAdd){
-        String key = toAdd.getRow() + toAdd.getSeatNo();
-
-        seats.put(key, toAdd);
+    	seats[toAdd.getRow()][toAdd.getSeatNo()] = toAdd;
     }
 
     /*
      Cancels a seat based off given String, in format rowNumber (i.e, "A4")
      */
     public void cancelSeat(Seat toRemove){
-        seats.remove(toRemove);
+    	seats[toRemove.getRow()][toRemove.getSeatNo()] = new Seat(toRemove.getRow(),toRemove.getSeatNo());
     }
 
+    public boolean isTaken(int row, int seatNo) {
+    	if(seats[row][seatNo].isAvailable()) {
+    		return false;
+    	}
+    	else {
+    		return true;
+    	}
+    }
+    
     /*
-     Edited to return a string representation of this seating plan.
+     Edited to return a 2d Array representation of this seating plan.
+     0 = Available
+     1 = Taken
      */
-    public ArrayList<Seat> getTakenSeats(){
-        ArrayList<Seat> takenSeats = new ArrayList<>();
-        for (Map.Entry<String, Seat> theSeats:seats.entrySet()) {
-            takenSeats.add(theSeats.getValue());
+    public int[][] getTakenSeats(){
+    	int[][] takenSeats = new int[5][5];
+    	for(int i = 0; i < 4; i++) {
+        	for(int j = 0; j < 4; j++) {
+        		if(seats[i][j].isAvailable()) {
+        			takenSeats[i][j] = 0;
+        		}
+        		else {
+        			takenSeats[i][j] = 1;
+        		}
+        	}
         }
         return takenSeats;
     }
