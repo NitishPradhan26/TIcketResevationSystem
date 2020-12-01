@@ -169,6 +169,7 @@ public class Homepage extends JFrame {
 		center = new JPanel(new GridLayout());
 		sendNewsButton.setBackground(buttonColor);
 		sendNewsButton.setFont(buttonFont);
+		sendNewsButton.addActionListener(new sendNewsListener());
 		center.add(sendNewsButton);
 		add("Center", center);
 	}
