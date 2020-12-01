@@ -166,10 +166,10 @@ public class Homepage extends JFrame {
 	 * Helper function to display welcome message depending on type of user
 	 */
 	private void setRegisteredUserName() {
-		if (!registeredUser) {
+		if (!registeredUser&&!isAdmin) {
 			subtitle = new JLabel("WELCOME UNREGISTERED USER");
 		}
-		else if(isAdmin) {
+		else if(isAdmin&&!registeredUser) {
 			subtitle = new JLabel("WELCOME ADMINISTRATOR");
 		}
 		else {
@@ -244,6 +244,7 @@ public class Homepage extends JFrame {
 	 */
 	public void setIsAdmin() {
 		isAdmin =true;
+		registeredUser=false;
 		displayNorthPanel();
 		displayAdminButton();
 	}
