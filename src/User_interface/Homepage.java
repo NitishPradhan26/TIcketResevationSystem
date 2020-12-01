@@ -77,6 +77,11 @@ public class Homepage extends JFrame {
 	private DataController dataControl;
 	
 	/**
+	 * Layout for buttons
+	 */
+	private JPanel buttonLayout;
+	
+	/**
 	 * Constructs homepage 
 	 */
 	public Homepage(){
@@ -133,7 +138,7 @@ public class Homepage extends JFrame {
 		center= new JPanel();
 		center.setLayout(new BorderLayout());
 		center.setBackground(new Color(131,197,190));
-		JPanel buttonLayout = new JPanel (new GridLayout(0,1));
+		buttonLayout = new JPanel (new GridLayout(0,1));
 		cancelTicketButton.setFont(buttonFont);
 		cancelTicketButton.setBackground(buttonColor);
 		buttonLayout.add(cancelTicketButton);
@@ -154,12 +159,18 @@ public class Homepage extends JFrame {
 	 */
 	private void displayAdminButton() {
 		if (center!=null) {
+			buttonLayout.remove(purchaseTicketButton);
+			buttonLayout.remove(loginButton);
+			buttonLayout.remove(cancelTicketButton);
+			buttonLayout.remove(registerButton);
+			center.remove(buttonLayout);
 			remove(center);
 		}
-		center = new JPanel();
+		center = new JPanel(new GridLayout());
 		sendNewsButton.setBackground(buttonColor);
 		sendNewsButton.setFont(buttonFont);
 		center.add(sendNewsButton);
+		add("Center", center);
 	}
 	
 	/**
@@ -272,6 +283,7 @@ public class Homepage extends JFrame {
 		}
 		
 	}
+
 	
 	
 }
