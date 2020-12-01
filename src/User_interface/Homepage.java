@@ -9,23 +9,76 @@ import javax.swing.*;
 
 import Data_control.DataController;
 
+/**
+ * Home page for application
+ * @author Vic (Vu) Phan, Alex Price, Nitish Pradhan, Luka Petrovic
+ *
+ */
 public class Homepage extends JFrame {
+	/**
+	 * Title of page
+	 */
 	private JLabel title = new JLabel("Ticket Reservation System");
+	/**
+	 * Displays welcome message and username
+	 */
 	private JLabel subtitle;
+	/**
+	 * Username of registered user (if user is registered)
+	 */
 	private String userName;
+	/**
+	 * If user is registered or has logeed in 
+	 */
 	private boolean registeredUser = false;
+	/**
+	 * Determines if user is an administrator
+	 */
 	private boolean isAdmin = false;
+	/**
+	 * Redirects user to cancellation page to cancel tickets
+	 */
 	private JButton cancelTicketButton= new JButton("Cancel Tickets");
+	/**
+	 * Redirects user to purchase tickets
+	 */
 	private JButton purchaseTicketButton= new JButton("Purchase Tickets");
+	/**
+	 * Redirects user to login 
+	 */
 	private JButton loginButton = new JButton("Login");
+	/**
+	 * Redirects user to register in system
+	 */
 	private JButton registerButton = new JButton("Register");
+	/**
+	 * Redirects user to send news to registered users (only for administrator)
+	 */
 	private JButton sendNewsButton = new JButton("Send Movie News");
+	/**
+	 * North panel for frame
+	 */
 	private JPanel north;
+	/**
+	 * Center panel for frame
+	 */
 	private JPanel center;
+	/**
+	 * Font for buttons
+	 */
 	private Font buttonFont = new Font("Verdana", Font.BOLD, 18);
+	/**
+	 * Color for buttons (background)
+	 */
 	private Color buttonColor = new Color(237,246,249);
+	/**
+	 * Data controller to access data
+	 */
 	private DataController dataControl;
 	
+	/**
+	 * Constructs homepage 
+	 */
 	public Homepage(){
 		//window related operations
 		super("Homepage");
@@ -39,8 +92,8 @@ public class Homepage extends JFrame {
 		//sets background, font and font colour of title
 		displayNorthPanel();
 		
+		//displays buttons depending on type of user
 		if (!isAdmin) {
-			//button related operations
 			displayUserButtons();
 		}
 		else {
@@ -50,6 +103,9 @@ public class Homepage extends JFrame {
 		
 	}
 	
+	/**
+	 * Helper class to north panel that includes title and welcome message
+	 */
 	private void displayNorthPanel() {
 		if (north!=null) {
 			remove(north);
@@ -67,6 +123,9 @@ public class Homepage extends JFrame {
 		
 	}
 	
+	/**
+	 * Helper function to display buttons for user
+	 */
 	private void displayUserButtons() {
 		if (center!=null) {
 			remove(center);
@@ -90,6 +149,9 @@ public class Homepage extends JFrame {
 		add("Center", buttonLayout);
 	}
 	
+	/**
+	 * Helper function to display the button for administrator
+	 */
 	private void displayAdminButton() {
 		if (center!=null) {
 			remove(center);
@@ -100,6 +162,9 @@ public class Homepage extends JFrame {
 		center.add(sendNewsButton);
 	}
 	
+	/**
+	 * Helper function to display welcome message depending on type of user
+	 */
 	private void setRegisteredUserName() {
 		if (!registeredUser) {
 			subtitle = new JLabel("WELCOME UNREGISTERED USER");
@@ -115,22 +180,42 @@ public class Homepage extends JFrame {
 		north.add(subtitle);
 	}
 
+	/**
+	 * Adds listener to purchase ticket button
+	 * @param listener: listener to purchase ticket button
+	 */
 	public void addPurchaseTicketListener(ActionListener listener) {
 		purchaseTicketButton.addActionListener(listener);
 	}
 	
+	/**
+	 * Adds listener to cancel ticket button
+	 * @param listener: listener to cancel ticket button 
+	 */
 	public void addCancelTicketListener(ActionListener listener) {
 		cancelTicketButton.addActionListener(listener);
 	}
 	
+	/**
+	 * Adds listener to login button 
+	 * @param listener: listener to login button
+	 */
 	public void addLoginListener(ActionListener listener) {
 		loginButton.addActionListener(listener);
 	}
 	
+	/**
+	 * Adds listener to registration button 
+	 * @param listener: listener to register button 
+	 */
 	public void addRegisterListener(ActionListener listener) {
 		registerButton.addActionListener(listener);
 	}
 	
+	/**
+	 * Sets username member
+	 * @param username: username of registered user
+	 */
 	public void setUsername(String username) {
 		this.userName = username;
 		registeredUser=true;
@@ -138,25 +223,44 @@ public class Homepage extends JFrame {
 		displayUserButtons();
 	}
 	
+	/**
+	 * Returns username of registered user
+	 * @return username: String
+	 */
 	public String getUsername() {
 		return userName;
 	}
 	
+	/**
+	 * Returns whether or not user is registered in system
+	 * @return registeredUser: boolean
+	 */
 	public boolean getRegisteredUser() {
 		return registeredUser;
 	}
 	
+	/**
+	 * Sets user to administrator
+	 */
 	public void setIsAdmin() {
 		isAdmin =true;
 		displayNorthPanel();
 		displayAdminButton();
 	}
 	
+	/**
+	 * Closes homepage
+	 */
 	public void closeHomepage() {
 		setVisible(false);
 		dispose();
 	}
 	
+	/**
+	 * Listener class, allows administrator to send news to all registered users
+	 * @author Vic (Vu) Phan, Alex Price, Nitish Pradhan, Luka Petrovic
+	 *
+	 */
 	public class sendNewsListener implements ActionListener{
 
 		@Override
