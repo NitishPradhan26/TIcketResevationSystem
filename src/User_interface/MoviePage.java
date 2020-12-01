@@ -14,25 +14,81 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Displays movies, theatres and their showings
+ * @author Vic (Vu) Phan, Alex Price, Nitish Pradhan, Luka Petrovic
+ *
+ */
 public class MoviePage extends JFrame{
+	/**
+	 * Title of page
+	 */
 	private JLabel title = new JLabel("Ticket Reservation System");
+	/**
+	 * North panel of frame
+	 */
 	private JPanel north = new JPanel();
+	/**
+	 * Center panel of frame
+	 */
 	private JPanel center = new JPanel();
+	/**
+	 * South panel of frame
+	 */
 	private JPanel south = new JPanel();
+	/**
+	 * Redirects user to homepage
+	 */
 	private JButton backButton = new JButton("Back to Homepage");
+	/**
+	 * Font for labels and buttons
+	 */
 	private Font labelFont = new Font("Verdana", Font.BOLD, 18);
+	/**
+	 * Font for text fields
+	 */
 	private Font fieldFont = new Font("Verdana", Font.PLAIN, 16);
+	/**
+	 * Color for buttons (background)
+	 */
 	private Color buttonColor = new Color(237,246,249);
+	/**
+	 * Enters movie selection
+	 */
 	private JButton selectMovieButton = new JButton ("Select");
+	/**
+	 * List of movies for user to select
+	 */
 	private JComboBox movieSelection;
+	/**
+	 * Enters theatre selection
+	 */
 	private JButton selectTheatreButton = new JButton ("Select");
+	/**
+	 * List of theatres for user to select
+	 */
 	private JComboBox theatreSelection;
+	/**
+	 * Color for background (center of page)
+	 */
 	private Color centerBackgroundColor = new Color(131,197,190);
+	/**
+	 * Font for request labels
+	 */
 	private Font questionFont = new Font("Verdana", Font.BOLD, 22);
+	/**
+	 * Seat selection page
+	 */
 	private SeatSelection seatSelection;
+	/**
+	 * Data controller to access data
+	 */
 	private DataController dataControl;
 	
 	
+	/**
+	 * Constructs the movie page
+	 */
 	public MoviePage() {
 		super("Cancellation Page");
 		setTitle("Cancel Tickets");
@@ -85,22 +141,39 @@ public class MoviePage extends JFrame{
 		add("South", south);
 	}
 	
+	/**
+	 * Returns list of movies from data control
+	 * @return movies: String[]
+	 */
 	private String[] getMovies() {
 		ArrayList<String> movieArray = dataControl.getMovies();
 		String[] strings = new String[movieArray.size()];
 		return movieArray.toArray(strings);
 	}
 	
+	/**
+	 * Returns list of theatres from data control
+	 * @return theatres: String[]
+	 */
 	private String[] getTheatres() {
 		ArrayList<String> theatreArray = dataControl.getTheatres();
 		String[] strings = new String[theatreArray.size()];
 		return theatreArray.toArray(strings);
 	}
 	
+	/**
+	 * Returns all showings for specified movie and theatre from data control 
+	 * @param movieName: specified movie
+	 * @param theatreName: specified theatre
+	 * @return all showings: ArrayList of Showings
+	 */
 	private ArrayList<Showing> getShowings(String movieName, String theatreName){
 		return dataControl.getShowings(movieName, theatreName);
 	}
 	
+	/**
+	 * Helper function to display theatre options
+	 */
 	private void displayTheatreOption() {
 		
 		JPanel theatrePanel = new JPanel(new BorderLayout());
@@ -124,9 +197,11 @@ public class MoviePage extends JFrame{
 		
 	}
 	
+	/**
+	 * Helper function to display all showings 
+	 */
 	public void displayShowings() {
-		//make request to show showings based on theatre selected
-
+		
 		JPanel showingPanel = new JPanel();
 		showingPanel.setPreferredSize(new Dimension(350,300));
 		showingPanel.setBackground(centerBackgroundColor);
@@ -147,6 +222,7 @@ public class MoviePage extends JFrame{
         ArrayList<Showing> showings = getShowings((String)movieSelection.getSelectedItem(), (String)theatreSelection.getSelectedItem());
         ArrayList<ArrayList<Showing>> sortedShowings = getShowingsPerDate(showings);
         Iterator iterator = sortedShowings.iterator();
+        //displays all showings for each date 
         while (iterator.hasNext()) {
         	JPanel oneShowing = new JPanel();
         	oneShowing.setLayout(new BorderLayout());
@@ -180,26 +256,48 @@ public class MoviePage extends JFrame{
 		content.add(center);
 		
 	}
+	/**
+	 * Adds listener for back to homepage button
+	 * @param listener: listener for back to homepage button
+	 */
 	public void addBackListener(ActionListener listener) {
 		backButton.addActionListener(listener);
 	}
+	/**
+	 * Adds listener for select movie button
+	 * @param listener: listener for select movie button
+	 */
 	public void addSelectMovieListener(ActionListener listener) {
 		selectMovieButton.addActionListener(listener);
 	}
+	/**
+	 * Refreshes page 
+	 */
 	public void refresh() {
 		close();
 		open();
 	}
 	
+	/**
+	 * Closes page
+	 */
 	public void close() {
 		setVisible(false);
 		dispose();
 	}
 	
+	/**
+	 * Opens page
+	 */
 	public void open() {
 		setVisible(true);
 	}
 	
+	/**
+	 * Helper function to categorize showings by date
+	 * @param allShowings: arraylist of all showings
+	 * @return arraylist of arraylist of showings
+	 */
 	private ArrayList<ArrayList<Showing>> getShowingsPerDate(ArrayList<Showing> allShowings){
 		ArrayList<ArrayList<Showing>> showingsPerDate = new ArrayList<ArrayList<Showing>>();
 		int index=0;
@@ -236,6 +334,11 @@ public class MoviePage extends JFrame{
 	}
 	
 	
+	/**
+	 * Listener class, displays theatre
+	 * @author Vic (Vu) Phan, Alex Price, Nitish Pradhan, Luka Petrovic
+	 *
+	 */
 	public class selectMovieListener implements ActionListener{
 
 		@Override
@@ -246,6 +349,11 @@ public class MoviePage extends JFrame{
 		
 	}
 	
+	/**
+	 * Listener class, displays showings based on movie and theatre
+	 * @author Vic (Vu) Phan, Alex Price, Nitish Pradhan, Luka Petrovic
+	 *
+	 */
 	public class selectTheatreListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -254,13 +362,17 @@ public class MoviePage extends JFrame{
 		}
 	}
 	
+	/**
+	 * Listener class, displays seating plan for selected showing 
+	 * @author Vic (Vu) Phan, Alex Price, Nitish Pradhan, Luka Petrovic
+	 *
+	 */
 	public class selectShowingListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			showingButton button = (showingButton)e.getSource();
 			seatSelection = new SeatSelection((String)movieSelection.getSelectedItem(), (String)button.getShowing().getTime().toString(), button.getShowing().getPlan());
 			seatSelection.setShow(button.getShowing());
-			//seatSelection.setSeats(button.getShowing().getPlan());
 			seatSelection.addBackListener(new navigateSeatToMovie());
 			close();
 			seatSelection.setVisible(true);
@@ -268,6 +380,11 @@ public class MoviePage extends JFrame{
 		}
 	}
 	
+	/**
+	 * Listener class, navigates from seating page back to movie page
+	 * @author Vic (Vu) Phan, Alex Price, Nitish Pradhan, Luka Petrovic
+	 *
+	 */
 	public class navigateSeatToMovie implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {

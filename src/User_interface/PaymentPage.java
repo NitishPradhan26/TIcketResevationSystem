@@ -16,36 +16,131 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * Payment page for user to input payment information
+ * @author Vic (Vu) Phan, Alex Price, Nitish Pradhan, Luka Petrovic
+ *
+ */
 public class PaymentPage extends JFrame{
+	/**
+	 * Title of page
+	 */
 	private JLabel title = new JLabel("Ticket Reservation System");
+	/**
+	 * North panel of frame
+	 */
 	private JPanel north = new JPanel();
+	/**
+	 * Center panel of frame
+	 */
 	private JPanel center = new JPanel();
+	/**
+	 * South panel of frame
+	 */
 	private JPanel south = new JPanel();
+	/**
+	 * Redirects user to homepage
+	 */
 	private JButton backButton = new JButton("Back to Homepage");
+	/**
+	 * Font for labels and buttons
+	 */
 	private Font labelFont = new Font("Verdana", Font.BOLD, 18);
+	/**
+	 * Font for text fields
+	 */
 	private Font fieldFont = new Font("Verdana", Font.PLAIN, 16);
+	/**
+	 * Color for buttons (background)
+	 */
 	private Color buttonColor = new Color(237,246,249);
-	private JLabel bankInfo = new JLabel("Banking Information");
+	/**
+	 * Label for user to enter payment information
+	 */
+	private JLabel bankInfo = new JLabel("Payment Information");
+	/**
+	 * Label for user to enter credit card
+	 */
 	private JLabel creditCard = new JLabel("Credit Card:");
+	/**
+	 * Field for user to input credit card number
+	 */
 	private JTextField creditCardInput = new JTextField(15);
+	/**
+	 * Label for user to enter name
+	 */
 	private JLabel creditCardHolder = new JLabel("Name:");
+	/**
+	 * Field for user to input name
+	 */
 	private JTextField creditCardHolderInput = new JTextField(15);
+	/**
+	 * Label for user to enter email address
+	 */
 	private JLabel email = new JLabel("Email:");
+	/**
+	 * Text field for user to enter email address
+	 */
 	private JTextField emailInput = new JTextField(15);
+	/**
+	 * Label for user to enter expiry date for credit card
+	 */
 	private JLabel expiryDate = new JLabel("Expiry:");
+	/**
+	 * Text field for user to enter expiry date
+	 */
 	private JTextField expiryDateInput = new JTextField(15);
+	/**
+	 * Label for user to enter credit card's CVV
+	 */
 	private JLabel cvv = new JLabel("CVV");
+	/**
+	 * Text field for user to enter credit card's CVV
+	 */
 	private JTextField cvvInput = new JTextField(15);
+	/**
+	 * Background color
+	 */
 	private Color centerBackgroundColor = new Color(131,197,190);
+	/**
+	 * Balance due 
+	 */
 	private float balanceDue;
+	/**
+	 * Label to display balance
+	 */
 	private JLabel balance;
+	/**
+	 * Sends payment information to process transaction
+	 */
 	private JButton pay = new JButton("Pay now");
+	/**
+	 * Cancels transaction
+	 */
 	private JButton cancel = new JButton("Cancel");
+	/**
+	 * Data controller to access data
+	 */
 	private DataController dataControl;
+	/**
+	 * Ticket manager to process ticket purchase
+	 */
 	private TicketManagement ticketManager;
+	/**
+	 * Seats bought by user
+	 */
 	private ArrayList<Integer> seats;
+	/**
+	 * Showing for tickets purchased
+	 */
 	private Showing show;
 	
+	/**
+	 * Constructs payment page
+	 * @param show: showing for tickets
+	 * @param userSelectedSeats: seats user selected
+	 * @param balance1: total due
+	 */
 	public PaymentPage(Showing show, ArrayList<Integer> userSelectedSeats, float balance1) {
 		super("Payment Page");
 		setTitle("Payment");
@@ -67,7 +162,15 @@ public class PaymentPage extends JFrame{
 		title.setForeground(Color.white);
 		north.add(title);
 		add("North",north);
+		setPaymentInfo();
 		
+
+	}
+	
+	/**
+	 * Helper function to set payment info on screen
+	 */
+	private void setPaymentInfo() {
 		SpringLayout contentLayout = new SpringLayout();
 		center.setLayout(contentLayout);
 		center.setBackground(centerBackgroundColor);
@@ -146,23 +249,42 @@ public class PaymentPage extends JFrame{
 		add("Center", center);
 	}
 	
+	/**
+	 * Sets total due
+	 * @param num: total due
+	 */
 	public void setBalanceDue(float num) {
 		this.balanceDue=num;
 	}
 	
+	/**
+	 * Closes page
+	 */
 	public void close() {
 		this.setVisible(false);
 		dispose();
 	}
 	
+	/**
+	 * Gets name from input field
+	 */
 	public String getName() {
 		return creditCardHolderInput.getText();
 	}
 	
+	/**
+	 * Gets email address from input field
+	 * @return email: String
+	 */
 	public String getEmail() {
 		return emailInput.getText();
 	}
 	
+	/**
+	 * Listener class, closes page if user cancels payment
+	 * @author Vic (Vu) Phan, Alex Price, Nitish Pradhan, Luka Petrovic
+	 *
+	 */
 	public class cancelPaymentListener implements ActionListener {
 
 		@Override
@@ -175,6 +297,11 @@ public class PaymentPage extends JFrame{
 		
 	}
 	
+	/**
+	 * Listener class, processes payment 
+	 * @author Vic (Vu) Phan, Alex Price, Nitish Pradhan, Luka Petrovic
+	 *
+	 */
 	public class paymentListener implements ActionListener {
 
 		@Override

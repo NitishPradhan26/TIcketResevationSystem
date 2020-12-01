@@ -16,27 +16,95 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Seat selection page for users to select seats
+ * @author Vic (Vu) Phan, Alex Price, Nitish Pradhan, Luka Petrovic
+ *
+ */
 public class SeatSelection extends JFrame{
+	/**
+	 * Selected movie
+	 */
 	private String movie;
+	/**
+	 * Selected showing
+	 */
 	private String showing;
+	/**
+	 * Selected show
+	 */
 	private Showing show;
+	/**
+	 * Seating plan
+	 */
 	private SeatingPlan seats;
+	/**
+	 * Array that represents seating plan
+	 */
 	private int[][] seatArray;
+	/**
+	 * Stores seats selected by user
+	 */
 	private ArrayList<Integer> userSelectedSeats = new ArrayList<Integer>();
+	/**
+	 * Title of page
+	 */
 	private JLabel title = new JLabel("Ticket Reservation System");
+	/**
+	 * North panel of frame
+	 */
 	private JPanel north = new JPanel();
+	/**
+	 * Center panel of frame
+	 */
 	private JPanel center = new JPanel();
+	/**
+	 * South panel of frame
+	 */
 	private JPanel south = new JPanel();
+	/**
+	 * Panel to store seats 
+	 */
 	private JPanel seatPanel;
+	/**
+	 * Navigates back to movie page
+	 */
 	private JButton backButton = new JButton("Back");
+	/**
+	 * Proceeds to complete transaction
+	 */
 	private JButton selectSeatButton = new JButton("Select Seats");
+	/**
+	 * Font for labels and buttons
+	 */
 	private Font labelFont = new Font("Verdana", Font.BOLD, 18);
+	/**
+	 * Font for text field
+	 */
 	private Font fieldFont = new Font("Verdana", Font.PLAIN, 16);
+	/**
+	 * Color for buttons
+	 */
 	private Color buttonColor = new Color(237,246,249);
+	/**
+	 * Color for seat when it is selected by user
+	 */
 	private Color selectedSeatColor = new Color(153, 218, 240);
+	/**
+	 * Color for background
+	 */
 	private Color centerBackgroundColor = new Color(131,197,190);
+	/**
+	 * Color for seat when it is taken already
+	 */
 	private Color takenSeatColor = new Color(111, 171, 191);
 	
+	/**
+	 * Constructs seat selection page
+	 * @param movie: selected movie
+	 * @param showing: selected showing
+	 * @param seats: seating plan for showing
+	 */
 	public SeatSelection(String movie, String showing, SeatingPlan seats) {
 		super("Seat Selection");
 		setTitle("Seat Selection");
@@ -87,6 +155,9 @@ public class SeatSelection extends JFrame{
 		add("South", south);
 	}
 	
+	/**
+	 * displays seats onto page
+	 */
 	public void displaySeats(){
 		seatPanel = new JPanel(new GridLayout(5,5));
 		seatPanel.setBorder(new EmptyBorder(20,20,20,20));
@@ -111,23 +182,43 @@ public class SeatSelection extends JFrame{
 	
 
 	
+	/**
+	 * adds listener to back button
+	 * @param listener
+	 */
 	public void addBackListener(ActionListener listener) {
 		backButton.addActionListener(listener);
 	}
 	
+	/**
+	 * closes page
+	 */
 	public void close() {
 		setVisible(false);
 		dispose();
 	}
 	
+	/**
+	 * sets showing
+	 * @param show
+	 */
 	public void setShow(Showing show) {
 		this.show=show;
 	}
 	
+	/**
+	 * sets seating plan
+	 * @param seatPlan
+	 */
 	public void setSeats(SeatingPlan seatPlan) {
 		this.seats=seatPlan;
 	}
 	
+	/**
+	 * Listener class, records seats selected by user, removes seats when deselected
+	 * @author Vic (Vu) Phan, Alex Price, Nitish Pradhan, Luka Petrovic
+	 *
+	 */
 	public class selectSeatListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -152,9 +243,15 @@ public class SeatSelection extends JFrame{
 	}
 	
 	
+	/**
+	 * Listener class, processes seat selection and payment 
+	 * @author Vic (Vu) Phan, Alex Price, Nitish Pradhan, Luka Petrovic
+	 *
+	 */
 	public class confirmSeatListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			//confirms seat selection from user
 			String message = "You have selected seats:";
 			for (Integer s: userSelectedSeats) {
 				message+= " "+s;
@@ -162,8 +259,8 @@ public class SeatSelection extends JFrame{
 			message+=". Please confirm your seat selection.";
 			int value = JOptionPane.showConfirmDialog(getParent(), message);
 			if (value==JOptionPane.YES_OPTION) {
-				//send seat selection to database, get payment info 
 				UIManager manager = UIManager.getUIManager();
+				//processes payment if user is already logged in
 				if (manager.registeredUser()) {
 					DataController dc = DataController.dataController();
 					TicketManagement tm = dc.ticketManager;
@@ -191,6 +288,7 @@ public class SeatSelection extends JFrame{
 					if (response==JOptionPane.YES_OPTION) {
 						JOptionPane.showMessageDialog(getParent(), "Please navigate to the homepage and login using your name and password, and try again.");
 					}
+					//proceeds to payment page if user is not registered
 					else if (response==JOptionPane.NO_OPTION){
 						PaymentPage payment = new PaymentPage(show, userSelectedSeats, balance);
 						payment.setVisible(true);
@@ -198,6 +296,7 @@ public class SeatSelection extends JFrame{
 					}
 				}
 			}
+			//closes page if user cancels
 			if (value==JOptionPane.CANCEL_OPTION) {
 				close();
 			}
