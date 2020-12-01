@@ -28,6 +28,13 @@ public class Payment {
     }
 
     /**
+     * Constructs an empty payment.
+     */
+    public Payment() {
+        this.timeStamp = new Timestamp(System.currentTimeMillis());
+    }
+
+    /**
      * This function completes the payment process by either contacting the bank or by reducing the credit he has in his account
      * @param ticket
      */
