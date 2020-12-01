@@ -1,8 +1,6 @@
 package Data_control;
 
 import Theatre_elements.Movie;
-import Theatre_elements.MyDate;
-import Theatre_elements.Seat;
 import Theatre_elements.Showing;
 import Theatre_elements.Theatre;
 import Transaction_elements.Ticket;
@@ -10,6 +8,11 @@ import User.*;
 
 import java.util.ArrayList;
 
+/**
+ * Data controller class controlling and managing access to data within the ticket reservation system.
+ * Uses singleton design pattern, accessed publicly by calling dataController().
+ * @author Alex Price
+ */
 public class DataController {
 
     private DatabaseManager dbM;
@@ -22,6 +25,9 @@ public class DataController {
 
     private static DataController dataController;
 
+    /**
+     * Private constructor for the DataController, constructing a DatabaseManager and associated TicketManagement and Catalogues.
+     */
     private DataController(){
         dbM = new DatabaseManager("localhost\\SQLEXPRESS02:60490");
         ticketList = new TicketList(dbM.tickets);
@@ -32,6 +38,10 @@ public class DataController {
         showings = dbM.showings;
     }
 
+    /**
+     * Gets a list of movie names that are in the database.
+     * @return list of movie names
+     */
     public ArrayList<String> getMovies(){
         ArrayList<Movie> movieArray = movieCatalogue.getMovies();
         ArrayList<String> movies = new ArrayList<String>();
@@ -40,6 +50,11 @@ public class DataController {
         }
         return movies;
     }
+
+    /**
+     * Get a list of Movie theatres that are in the database.
+     * @return list of theatre names
+     */
     public ArrayList<String> getTheatres(){
         ArrayList<Theatre> theatreArray = theatreCatalogue.getTheatres();
         ArrayList<String> theatres = new ArrayList<String>();
@@ -49,6 +64,12 @@ public class DataController {
         return theatres;
     }
 
+    /**
+     * Get a list of Showings for the given movie name and theatre name.
+     * @param movieName name of the movie
+     * @param theatreName name of the theatre
+     * @return list of showings
+     */
     public ArrayList<Showing> getShowings(String movieName, String theatreName) {
         ArrayList<Showing> goodShowings = new ArrayList<>();
         for (Showing s : showings) {
@@ -58,7 +79,12 @@ public class DataController {
         }
         return goodShowings;
     }
-    
+
+    /**
+     * Gets a user by their username.
+     * @param username username of the user
+     * @return the associated user, if any
+     */
     public User getUser(String username) {
     	for (User u:users) {
     		if (u.getUsername().equals(username)) {
@@ -68,6 +94,12 @@ public class DataController {
     	return null;
     }
 
+    /**
+     * Logs in a user to a database.
+     * @param username username of the user
+     * @param password password of the user
+     * @return the associated user, if any
+     */
     public User loginUser(String username, String password){
         for(User u:users){
             if(u.getUsername().equals(username) && u.getPassword().equals(password)){
@@ -77,6 +109,17 @@ public class DataController {
         return null;
     }
 
+    /**
+     * Adds a new Registered_user to the database.
+     * @param name name of the user
+     * @param username username of the user
+     * @param password password of the user
+     * @param email email address of the user
+     * @param creditCardNo credit card number of the user
+     * @param ccExpiry credit card expiry date of the user
+     * @param ccCVV credit card CVV of the user
+     * @param address address of the user
+     */
     public void registerUser(String name, String username, String password, String email, String creditCardNo, String ccExpiry, int ccCVV, String address) {
         int accountNo;
         User user = null;
@@ -94,18 +137,34 @@ public class DataController {
         dbM.addUser(u);
     }
 
+    /**
+     * Inserts a ticket into the database.
+    * @param ticket ticket to be inserted
+     */
     void storeTicket(Ticket ticket){
         dbM.storeTicket(ticket);
     }
 
+    /**
+     * Cancels a ticket in the database.
+     * @param ticket ticket to be canceled
+     */
     void cancelTicket(Ticket ticket){
         dbM.cancelTicket(ticket);
     }
-    
+
+    /**
+     * Sends an email with news to all users.
+     * @param message email message to be sent
+     */
     public void sendEmailToRegisteredUsers(String message) {
     	System.out.println("Email sent to all registered users");
     }
 
+    /**
+     * Returns the singleton instance of the DataController
+     * @return the DataController
+     */
     public static DataController dataController(){
         if(dataController == null){
             dataController = new DataController();
@@ -114,6 +173,7 @@ public class DataController {
     }
 
     public static void main(String[] args){
+        //Test main function to test DataController functionality
         dataController().getMovies(); //get all movies as arraylist
         dataController().getTheatres(); //get all theatres as arraylist
         ArrayList<Showing> s = dataController().getShowings("Kung Fu Hustle", "Theatre"); //get all showings for given movie and theatre
