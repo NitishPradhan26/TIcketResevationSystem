@@ -4,6 +4,9 @@ import Theatre_elements.Seat;
 import Theatre_elements.Showing;
 import User. *;
 
+/**
+ * This class keeps track of the related information and function of ticket purchase and ticket cancelation
+ */
 public class Ticket {
     private int ticketNo;
     private Seat seat;
@@ -13,6 +16,16 @@ public class Ticket {
     private boolean cancelled;
     private Payment payment;
 
+    /**
+     * A constructor
+     * @param ticketNo, the number of the ticket
+     * @param seat, the seat of the ticket
+     * @param user, the buyer of the ticket
+     * @param showing , the showing related to the ticket
+     * @param price , the prices of  the ticket
+     * @param cancelled, the state of the ticket
+     * @param p, the payment info related to the ticker purchase
+     */
     public Ticket(int ticketNo, Seat seat, User user, Showing showing, float price, boolean cancelled, Payment p){
         this.ticketNo = ticketNo;
         this.seat = seat;
@@ -23,6 +36,9 @@ public class Ticket {
         this.payment =p;
     }
 
+    /**
+     * This function refunds the ticket if valid, if not returns an error
+     */
     public void refundTicket(){
         boolean temp = this.payment.completeRefund();
         if(temp){
@@ -35,13 +51,15 @@ public class Ticket {
             }
         }
         else{
-            System.out.println(" Refund failed");
+            System.out.println(" Refund failed : passed the 72 hours mark");
         }
         this.cancelled = true;
         seat.setPurchaser(null);
     }
 
-
+    /**
+     * Refund process for the registered user
+     */
     public void refundRegisteredUser(){
 
 
@@ -52,6 +70,10 @@ public class Ticket {
 
         this.cancelled = true;
     }
+
+    /**
+     * Refund process for the unregistered user
+     */
 
     public  void RefundUnRegisteredUser(){
 
@@ -65,30 +87,59 @@ public class Ticket {
         this.cancelled = true;
     }
 
+    /**
+     * This function return the state of the ticket
+     * @return, boolean value
+     */
 
     public boolean getCancelled(){
         return cancelled;
     }
 
+    /**
+     * Getter
+     * @return, the user object related to this ticket
+     */
     public User getUser(){
         return user;
     }
 
+    /**
+     * Getter
+     * @return, the prices of the ticket
+     */
     public float getPrice(){
         return price;
     }
 
+    /**
+     * Getter
+     * @return, the ticket no of the ticket
+     */
     public int getTicketNo() {
         return ticketNo;
     }
 
+    /**
+     * Setter
+     * @param seat, initializes the seat varialbe of this ticket with seat object provided
+     */
     public void setSeat(Seat seat) {
         this.seat = seat;
     }
 
+    /**
+     * Getter
+     * @return, the object of seat class related to this ticket
+     */
     public Seat getSeat(){
         return seat;
     }
+
+    /**
+     * Getter
+     * @return, the object of showing related to this ticket
+     */
 
     public Showing getShowing() {
         return showing;

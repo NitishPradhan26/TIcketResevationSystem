@@ -4,6 +4,9 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ *  This class contains the information related to a payment process
+ */
 public class Payment {
 
     private CreditCard creditCard;
@@ -11,15 +14,11 @@ public class Payment {
     private Timestamp timeStamp;
 
 
-
-
-    public  Payment(){
-        this.creditCard = null;
-        this.bank = null;
-        this.timeStamp = new Timestamp(System.currentTimeMillis());
-
-
-    }
+    /**
+     * A constructor to initializes its values
+     * @param CreditCard, the credit card related to a particular payment
+     * @param Bank, the bank to contact to complete the process payment
+     */
     public Payment(CreditCard CreditCard,Financial_Institution Bank){
         this.creditCard = CreditCard;
         this.bank = Bank;
@@ -27,6 +26,11 @@ public class Payment {
 
 
     }
+
+    /**
+     * This function completes the payment process by either contacting the bank or by reducing the credit he has in his account
+     * @param ticket
+     */
 
 
     public void completePayment(Ticket ticket){
@@ -50,6 +54,11 @@ public class Payment {
         System.out.println(" Process complete, proceed to make the purchase confirmation");
 
     }
+
+    /**
+     * This function checks if the refund is possible
+     * @return, true if refund possible, false if not
+     */
 
     public boolean completeRefund(){
 
@@ -78,7 +87,7 @@ public class Payment {
         else{
             // return false if the refund is validated
 
-            System.out.println("You have excceded the time limit of 72 hours for the refund to be validate: refund not processed");
+
             return false;
         }
 
