@@ -267,7 +267,7 @@ public class RegisterForm extends JFrame{
 	
 	public String getPassword() {
 		char [] passwordArray = passwordInput.getPassword();
-		return passwordArray.toString();
+		return new String(passwordArray);
 	}
 	
 	public String getEmail() {

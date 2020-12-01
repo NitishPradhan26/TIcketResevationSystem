@@ -52,6 +52,17 @@ public class DatabaseManager {
         return null;
     }
 
+    private void updateDB(String query){
+        try{
+            Statement statement = connection.createStatement();
+            int result = statement.executeUpdate(query);
+            System.out.println("Changed "+result+" row(s) in the database.");
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     private void loadUsers(){
         users = new ArrayList<>();
         ResultSet userSet = queryDB("SELECT Name, Username, Password, Email, AccountNum, Credit, CreditCardNumber, Address, RegisteredUser, Administrator FROM users");
@@ -175,11 +186,42 @@ public class DatabaseManager {
     }
 
     private User findUser(int accountNum){
+        if(accountNum == 0){
+            return null;
+        }
         for(User u:users){
             if(u.getAccountNum() == accountNum){
                 return u;
             }
         }
         return null;
+    }
+
+    public void addUser(Registered_user u){
+        updateDB(String.format("INSERT INTO users VALUES ('%s', '%s', '%s', '%s', %d, 0, '%s', '%s', 1, null)",
+                u.getName(), u.getUsername(), u.getPassword(), u.getEmail(), u.getAccountNum(), u.getCreditCard().getCCNum(), u.getAddress()));
+    }
+
+    public void storeTicket(Ticket ticket){
+        try {
+            char row =  (char)(ticket.getSeat().getRow() + 'A');
+            SimpleDateFormat dbFormat = new SimpleDateFormat("MMMM d, yyyy h:mma"), myDateFormat = new SimpleDateFormat("M/d/yyyy H:m");
+            String dateTime = dbFormat.format(myDateFormat.parse(ticket.getShowing().getTime().toString()));
+            updateDB(String.format("INSERT INTO seat VALUES ('%s', 'Theatre', '%c', %d, %d, '%s')",
+                    ticket.getShowing().getMovie().getName(), row, ticket.getSeat().getSeatNo()+1, ticket.getTicketNo(), dateTime));
+            int userNum = ticket.getUser().getAccountNum();
+            if(ticket.getUser().getUsername() == null){
+                userNum = 0;
+            }
+            updateDB(String.format("INSERT INTO ticket VALUES ('%s', 'Theatre', '%c', %d, %d, %d, null, '%s', '%.2f')",
+                    ticket.getShowing().getMovie().getName(), row, ticket.getSeat().getSeatNo()+1, ticket.getTicketNo(), userNum, dateTime, ticket.getPrice()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void cancelTicket(Ticket ticket){
+        updateDB("DELETE FROM seat WHERE TicketNo='" + ticket.getTicketNo()+"'");
+        updateDB("UPDATE ticket SET Cancelled=1 WHERE TicketNo='"+ticket.getTicketNo()+"'");
     }
 }

@@ -24,31 +24,21 @@ public class Ticket {
     }
 
     public void refundTicket(){
-
         boolean temp = this.payment.completeRefund();
         if(temp){
-
             if(this.getUser() instanceof Registered_user) {
                 // return true if the refund is validated
-
                 this.refundRegisteredUser();
             }
-
             else{
-
                 this.RefundUnRegisteredUser();
             }
-
-
         }
-
         else{
-
             System.out.println(" Refund failed");
         }
-
         this.cancelled = true;
-
+        seat.setPurchaser(null);
     }
 
 
@@ -65,9 +55,10 @@ public class Ticket {
 
     public  void RefundUnRegisteredUser(){
 
-
-        float refund= (float) (this.user.getCredit() + (price - (0.15*price)));
-        this.user.setCredit(refund);
+        if(user != null) {
+            float refund = (float) (this.user.getCredit() + (price - (0.15 * price)));
+            this.user.setCredit(refund);
+        }
 
         System.out.println(" refund credit succesfully added to the client account ");
 
@@ -93,5 +84,13 @@ public class Ticket {
 
     public void setSeat(Seat seat) {
         this.seat = seat;
+    }
+
+    public Seat getSeat(){
+        return seat;
+    }
+
+    public Showing getShowing() {
+        return showing;
     }
 }

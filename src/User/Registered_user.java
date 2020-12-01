@@ -17,4 +17,8 @@ public class Registered_user extends User {
     public CreditCard getCreditCard() {
         return creditCard;
     }
+
+    public String getAddress(){
+        return address;
+    }
 }

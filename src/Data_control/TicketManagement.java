@@ -19,8 +19,6 @@ public class TicketManagement {
     }
 
     public void purchaseSeat(User user, Showing showing, int row, int col, CreditCard card){
-        // This function also needs to have a credit card object as an argument
-
         Seat seat = new Seat(row, col);
         showing.getPlan().purchaseSeat(seat);
         int ticketNo;
@@ -37,7 +35,7 @@ public class TicketManagement {
         payment.completePayment(ticket);
         seat.setPurchaser(ticket);
         dc.ticketList.addTicket(ticket);
-
+        dc.storeTicket(ticket);
     }
 
     public ArrayList<Ticket> getUserTickets(int userNum){
@@ -56,6 +54,7 @@ public class TicketManagement {
         }
         else {
             ticket.refundTicket();
+            dc.cancelTicket(ticket);
             return true;
         }
     }

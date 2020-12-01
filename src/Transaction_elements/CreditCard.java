@@ -16,6 +16,10 @@ public class CreditCard {
 
     }
 
+    public String getCCNum(){
+        return creditCardNumber;
+    }
+
 
     void makePayment(Float amount){
 

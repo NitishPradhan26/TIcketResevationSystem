@@ -10,9 +10,9 @@ public class MyDate {
     int minute;
 
     public MyDate(Date date){
-        year = date.getDate();
-        month = date.getMonth();
-        day = date.getDay();
+        year = date.getYear() + 1900;
+        month = date.getMonth() + 1;
+        day = date.getDate();
         hour = date.getHours();
         minute = date.getMinutes();
     }

@@ -37,4 +37,12 @@ public class User {
     public void setCredit(float credit) {
         this.credit = credit;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail(){
+        return email;
+    }
 }

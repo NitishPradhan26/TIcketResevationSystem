@@ -89,7 +89,17 @@ public class DataController {
                 }
             }
         } while (user != null);
-        users.add(new Registered_user(name, username, password, email, accountNo, 0f, creditCardNo, ccExpiry, ccCVV, address));
+        Registered_user u = new Registered_user(name, username, password, email, accountNo, 0f, creditCardNo, ccExpiry, ccCVV, address);
+        users.add(u);
+        dbM.addUser(u);
+    }
+
+    void storeTicket(Ticket ticket){
+        dbM.storeTicket(ticket);
+    }
+
+    void cancelTicket(Ticket ticket){
+        dbM.cancelTicket(ticket);
     }
     
     public void sendEmailToRegisteredUsers(String message) {
@@ -107,7 +117,7 @@ public class DataController {
         dataController().getMovies(); //get all movies as arraylist
         dataController().getTheatres(); //get all theatres as arraylist
         ArrayList<Showing> s = dataController().getShowings("Kung Fu Hustle", "Theatre"); //get all showings for given movie and theatre
-        dataController().registerUser("Bob", "benis@benis.com", "eee", "benis@benis.com", "877987987", "tomorrow", 100, "somewhere"); //register new user
+        //dataController().registerUser("Bob", "benis@benis.com", "eee", "benis@benis.com", "877987987", "tomorrow", 100, "somewhere"); //register new user
         Registered_user u = (Registered_user)dataController().loginUser("twentyyears", "teaching"); //login a user
         dataController().loginUser("uwu", "uwu"); //fail login
         dataController().ticketManager.purchaseSeat(u, s.get(0), 1, 2, u.getCreditCard()); //purchase ticket
