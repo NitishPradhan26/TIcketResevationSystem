@@ -1,15 +1,37 @@
 package Theatre_elements;
 
-import java.util.Date;
 
+
+/**
+ * A representation of a movie showing at a theatre.
+ * @author Luka Petrovic
+ * @since 11/29/20
+ *
+ */
 public class Showing {
+	/**
+	 * The Movie being played at this Showing
+	 */
     private Movie movie;
+    /**
+     * The time the Showing is being held
+     */
     private MyDate time;
+    /**
+     * The Showing's Seating Plan (arrangement of Seats)
+     */
     private SeatingPlan plan;
+    /**
+     * The theatre the showing is being held at
+     */
     private Theatre theatre;
 
-    /*
+    /**
      * Constructor when given all necessary objects.
+     * @param movie 
+     * @param date
+     * @param plan
+     * @param theatre
      */
     public Showing(Movie movie, MyDate date, SeatingPlan plan, Theatre theatre){
         this.movie = movie;
@@ -18,8 +40,16 @@ public class Showing {
         this.theatre = theatre;
     }
 
-    /*
-     * C'tor when date has not been constructed.
+    /**
+     * Constructor when a MyDate has not been given.
+     * @param movie
+     * @param year
+     * @param month
+     * @param day
+     * @param hour
+     * @param minute
+     * @param plan
+     * @param theatre
      */
     public Showing(Movie movie, int year, int month, int day, int hour, int minute, SeatingPlan plan, Theatre theatre){
         this.movie = movie;
@@ -28,8 +58,12 @@ public class Showing {
         this.theatre = theatre;
     }
 
-    /*
-        Ctor given a movie name
+    /**
+     * Constructor when only given a movie name
+     * @param movieName
+     * @param date
+     * @param plan
+     * @param theatre
      */
     public Showing(String movieName, MyDate date, SeatingPlan plan, Theatre theatre){
         this.movie = new Movie(movieName);
@@ -38,6 +72,12 @@ public class Showing {
         this.theatre = theatre;
     }
 
+    /**
+     * Constructor when there is no seating plan 
+     * @param movie
+     * @param theatre
+     * @param date
+     */
     public Showing(Movie movie, Theatre theatre, MyDate date){
         this.movie = movie;
         this.theatre = theatre;
