@@ -160,6 +160,7 @@ public class Homepage extends JFrame {
 		sendNewsButton.setBackground(buttonColor);
 		sendNewsButton.setFont(buttonFont);
 		center.add(sendNewsButton);
+		add("Center", center);
 	}
 	
 	/**

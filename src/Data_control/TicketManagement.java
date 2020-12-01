@@ -75,13 +75,10 @@ public class TicketManagement {
      */
     public boolean cancelTicket(int ticketId){
         Ticket ticket = dc.ticketList.getTicket(ticketId);
-        if(ticket == null){
-            return false;
-        }
-        else {
-            ticket.refundTicket();
+        if(ticket == null && ticket.refundTicket()){
             dc.cancelTicket(ticket);
             return true;
         }
+        return false;
     }
 }

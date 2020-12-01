@@ -38,8 +38,9 @@ public class Ticket {
 
     /**
      * This function refunds the ticket if valid, if not returns an error
+     * @return if the operation was successful
      */
-    public void refundTicket(){
+    public boolean refundTicket(){
         boolean temp = this.payment.completeRefund();
         if(temp){
             if(this.getUser() instanceof Registered_user) {
@@ -52,9 +53,11 @@ public class Ticket {
         }
         else{
             System.out.println(" Refund failed : passed the 72 hours mark");
+            return false;
         }
         this.cancelled = true;
         seat.setPurchaser(null);
+        return true;
     }
 
     /**
